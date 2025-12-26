@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "About";
+}
+
+<style>
+    
+    .about-page {
+        max-width: 900px;
+        margin-top: 40px;
+        padding: 0 20px; 
+    }
+
+    .about-hero {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+        .about-hero h1 { 
+            font-size: 2.2rem;
+            color: #1e3a8a;
+            margin-bottom: 5px; 
+        }
+
+        .about-hero .tagline { 
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-top: 10px;
+        }
+
+    .about-section {
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: #ffffff; 
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+        .about-section h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0; 
+            padding-bottom: 5px;
+        }
+
+        .about-section p {
+            color: #475569;
+            line-height: 1.7; 
+        }
+
+    .about-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+        .about-list li {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: #334155;
+            position: relative;
+            padding-left: 25px;
+            font-weight: 500;
+        }
+
+          /*   .about-list li::before {
+                content: '✅'; 
+                position: absolute;
+                left: 0;
+                color: #22c55e; 
+                font-size: 1.1em;
+                line-height: 1;
+            } */
+
+</style>
+
+<div class="container about-page">
+    <div class="about-hero">
+        <h1>About LinguaLink</h1>
+        <p class="tagline">Connecting cultures through language learning.</p>
+    </div>
+    
+    <section class="about-section">
+        <h3>Our Mission</h3>
+        <p>
+            At <strong>LinguaLink</strong>, our mission is to make language learning
+            accessible, engaging, and effective for everyone. We believe language
+            is more than words - it’s a bridge that connects people, cultures, and ideas.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h3>What We Offer</h3>
+        <ul class="about-list">
+            <li>Courses in multiple international languages</li>
+            <li>Beginner, Intermediate, and Advanced levels</li>
+            <li>Practical learning focused on real-life communication</li>
+            <li>Structured content designed for steady progress</li>
+        </ul>
+    </section>
+
+    <section class="about-section">
+        <h3>Why Choose LinguaLink?</h3>
+        <p>
+            Whether you're a student, professional, or language enthusiast,
+            LinguaLink provides a supportive platform that helps you grow
+            confidently at your own pace.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h3>Our Vision</h3>
+        <p>
+            We envision a world where language is no longer a barrier but an
+            opportunity - enabling people to connect, collaborate, and thrive globally.
+        </p>
+    </section>
+
+</div>

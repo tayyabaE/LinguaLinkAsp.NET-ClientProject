@@ -1,0 +1,177 @@
+﻿@model IEnumerable<Web_Based_Learning_System.Models.LearnerCourseViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LearnerLayout.cshtml";
+    ViewData["Title"] = "Explore Courses";
+}
+
+<style>
+    .courses-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+        padding: 0 10px;
+    }
+
+    .course-card {
+        position: relative;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+        }
+
+        .course-card p {
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.5;
+            min-height: 45px;
+        }
+
+    /* LEVEL BADGE STYLING */
+    .course-level {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: white;
+        z-index: 5;
+    }
+
+    .level-beginner {
+        background-color: #22c55e; 
+    }
+
+    .level-intermediate {
+        background-color: #f59e0b; 
+    }
+
+    .level-advanced {
+        background-color: #ef4444; 
+    }
+    .enrolled-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: white;
+        background-color: #059669;
+        box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+        z-index: 6; 
+    }
+
+    .courses-container .course-card:has(.enrolled-badge) {
+        background: #e0f2f7; 
+        border: 2px solid #3b82f6; 
+        opacity: 0.95;
+        box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2); 
+    }
+
+        .courses-container .course-card:has(.enrolled-badge):hover {
+            transform: none; 
+            cursor: default;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+        }
+
+    .course-card form button.btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 18px;
+        margin-top: 20px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border-radius: 8px;
+        font-weight: 700; 
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .course-card form button.btn:hover {
+            transform: scale(1.02); 
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5); 
+        }
+
+    .course-card a.btn {
+        display: block;
+        width: 90%;
+        text-align: center;
+        padding: 10px 10px;
+        margin-top: 20px;
+        background-color: #059669;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+        .course-card a.btn:hover {
+            background-color: #047857; 
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
+        }
+</style>
+
+<h2>Explore Courses</h2>
+
+<div class="courses-container">
+    @foreach (var course in Model)
+    {
+        <div class="course-card">
+            
+            <span class="course-level 
+                  @(course.Level == "Beginner" ? "level-beginner" :
+                    course.Level == "Intermediate" ? "level-intermediate" :
+                    "level-advanced")">
+                @course.Level
+            </span>
+
+            <h3>@course.Name</h3>
+            <p>@course.Description</p>
+
+            @if (course.IsEnrolled)
+            {
+                <span class="enrolled-badge">Enrolled ✔</span>
+                
+                <a class="btn"
+                   href="@Url.Action("Lessons", "Learner", new { courseId = course.CourseId })">
+                    View Lessons
+                </a>
+            }
+            else
+            {
+                <form asp-action="Enroll" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="courseId" value="@course.CourseId" />
+                    <button type="submit" class="btn">Enroll</button>
+                </form>
+            }
+        </div>
+    }
+</div>

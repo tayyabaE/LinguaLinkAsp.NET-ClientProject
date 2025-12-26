@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Course>
+@{
+    Layout = "~/Views/Shared/_LearnerLayout.cshtml";
+    ViewData["Title"] = "My Courses";
+}
+
+<style>
+    .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+        .dashboard-cards .card {
+            display: block; 
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #3b82f6; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
+        }
+
+            .dashboard-cards .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+                border-left-color: #2563eb;
+            }
+
+            .dashboard-cards .card h3 {
+                margin: 0 0 8px;
+                font-size: 1.4rem;
+                color: #1e3a8a;
+            }
+
+            .dashboard-cards .card p {
+                margin: 0;
+                font-size: 0.95rem;
+                color: #64748b;
+                font-weight: 500;
+            }
+</style>
+
+<h2>My Enrolled Courses</h2>
+
+<div class="container">
+    @if (!Model.Any())
+    {
+        <p>You are not enrolled in any course yet.</p>
+    }
+    else
+    {
+        <div class="dashboard-cards">
+            @foreach (var course in Model)
+            {
+                <a href="@Url.Action("Lessons", "Learner", new { courseId = course.Id })"
+                   class="card">
+                    <h3>@course.Name</h3>
+                    <p>Level: @course.Level</p>
+                </a>
+            }
+        </div>
+    }
+</div>

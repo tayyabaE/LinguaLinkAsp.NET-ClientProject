@@ -1,0 +1,154 @@
+﻿@model Web_Based_Learning_System.ViewModels.EditLessonViewModel
+@{
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+    ViewData["Title"] = "Edit Lesson";
+}
+
+<style>
+
+        .edit-lesson-wrapper {
+                max-width: 700px;
+                margin: 20px auto; 
+                padding: 0 20px;
+
+    }
+
+        h2 {
+                color: #1e3a8a;
+                margin-bottom: 20px;
+
+    }
+
+
+        form {
+                background-color: white;
+                padding: 25px 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    }
+
+        label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 600;
+                color: #1e293b;
+                font-size: 0.95rem;
+
+    }
+
+        input[type="text"],
+        input[type="number"], 
+        select,
+        textarea {
+                width: 90%; 
+                padding: 10px 12px;
+                margin-bottom: 15px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                font-size: 0.95rem;
+                color: #1e293b;
+                transition: border 0.2s, box-shadow 0.2s;
+                box-sizing: border-box;
+    }
+
+            input:focus,
+            select:focus,
+            textarea:focus {
+                    outline: none;
+                    border-color: #3b82f6;
+                    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+
+    }
+
+        textarea {
+                min-height: 100px; 
+                resize: vertical;
+                font-family: inherit;
+
+    }
+
+
+        .text-danger {
+                color: #ef4444;
+                font-size: 0.85rem;
+                display: block;
+                margin-top: -10px;
+                margin-bottom: 15px; 
+                font-weight: 500;
+
+    }
+
+
+        button[type="submit"] {
+                padding: 10px 25px; 
+                background: linear-gradient(135deg, #3b82f6, #2563eb);
+                color: white;
+                font-size: 1rem; 
+                font-weight: 600;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+                width: auto;
+
+    }
+
+                button[type="submit"]:hover {
+                        background: linear-gradient(135deg, #2563eb, #1e40af);
+                        transform: translateY(-1px);
+                        box-shadow: 0 5px 12px rgba(37, 99, 235, 0.4);
+
+        }
+
+
+        .success-msg {
+                padding: 12px 20px;
+                background-color: #22c55e;
+                color: white;
+                border-radius: 6px;
+                margin-bottom: 20px;
+                box-shadow: 0 3px 8px rgba(34, 197, 94, 0.3);
+                font-weight: 500;
+
+    }
+</style>
+
+
+<div class="edit-lesson-wrapper">
+    <h2>Edit Lesson</h2>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="success-msg">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <form method="post">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input type="hidden" asp-for="Lesson.Id" />
+
+
+        <label asp-for="Lesson.CourseId">Course</label>
+        <select asp-for="Lesson.CourseId"
+                          asp-items="@(new SelectList(Model.Courses, "Id", "Name", Model.Lesson.CourseId))">
+        </select>
+        <span asp-validation-for="Lesson.CourseId" class="text-danger"></span>
+
+        <label asp-for="Lesson.Title">Title</label>
+        <input type="text" asp-for="Lesson.Title" />
+        <span asp-validation-for="Lesson.Title" class="text-danger"></span>
+
+        <label asp-for="Lesson.Content">Content</label>
+        <textarea asp-for="Lesson.Content"></textarea>
+        <span asp-validation-for="Lesson.Content" class="text-danger"></span>
+
+        <label asp-for="Lesson.OrderNo">Order No</label>
+        <input type="number" asp-for="Lesson.OrderNo" />
+        <span asp-validation-for="Lesson.OrderNo" class="text-danger"></span>
+
+        <br />
+        <button type="submit">Update Lesson</button>
+    </form>
+</div>

@@ -1,0 +1,14 @@
+﻿@model Web_Based_Learning_System.Models.Lesson
+@{
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+    ViewData["Title"] = "Delete Lesson";
+}
+<h2>Delete Lesson</h2>
+
+<p>Are you sure you want to delete the lesson: <strong>@Model.Title</strong>?</p>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Yes, Delete</button>
+    <a href="/Instructor/Index">Cancel</a>
+</form>

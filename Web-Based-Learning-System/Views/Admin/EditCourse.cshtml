@@ -1,0 +1,128 @@
+﻿@model Web_Based_Learning_System.Models.Course
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Course";
+}
+
+<style>
+    .course-box {
+        max-width: 520px;
+        margin: 50px auto;
+        background: white;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    .course-box h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #1e3a8a;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #1e293b;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        font-size: 0.95rem;
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+    }
+
+    .action-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    .action-btn:hover {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        transform: translateY(-1px);
+        box-shadow: 0 5px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .success-message {
+        background: #dcfce7;
+        color: #166534;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 500;
+    }
+</style>
+
+<div class="course-box">
+    <h2>Edit Course</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="success-message" id="successMsg">
+            @TempData["Success"]
+        </div>
+    }
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label>Course Name</label>
+            <input asp-for="Name" placeholder="Enter course name" />
+        </div>
+
+        <div class="form-group">
+            <label>Level</label>
+            <select asp-for="Level">
+                <option value="">-- Select Level --</option>
+                <option value="Beginner" selected="@(Model.Level == "Beginner")">Beginner</option>
+                <option value="Intermediate" selected="@(Model.Level == "Intermediate")">Intermediate</option>
+                <option value="Advanced" selected="@(Model.Level == "Advanced")">Advanced</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea asp-for="Description" placeholder="Enter course description" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="action-btn">Update Course</button>
+    </form>
+</div>
+
+<script>
+    setTimeout(() => {
+        const msg = document.getElementById('successMsg');
+        if (msg) msg.style.display = 'none';
+    }, 4000);
+</script>

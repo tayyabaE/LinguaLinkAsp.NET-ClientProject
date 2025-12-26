@@ -1,0 +1,83 @@
+<style >
+/* Reset & Basics */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    color: #333;
+}
+
+/* Navbar */
+/*nav {
+    background-color: #3b82f6;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+    nav .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+
+        nav a:hover {
+            color: #dbeafe;
+        }*/
+
+/* Main container */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Hero / Welcome Section */
+.hero {
+    background-color: #dbeafe;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+    .hero h1 {
+        margin-bottom: 10px;
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        color: #1e293b;
+    }
+
+/* Forms - Modern Redesign (Enhanced) */
+
+
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Error message */
+p.error {
+    color: red;
+    text-align: center;
+}
+
+
+</style >

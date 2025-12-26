@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Web_Based_Learning_System.Models.User>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Manage Users";
+}
+<style>
+    h2, h3 {
+        color: #1e3a8a;
+        margin-bottom: 15px;
+    }
+
+    a.btn-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+    }
+
+        a.btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(37, 99, 235, 0.4);
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    }
+
+        table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        table tbody tr:hover {
+            background-color: #eef4ff;
+            cursor: pointer;
+        }
+
+    .action-btn {
+        display: inline-block;
+        padding: 5px 12px;
+        margin: 0 3px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.4);
+        }
+</style>
+
+<h2>Manage Users</h2>
+<a href="/Admin/AddUser" class="action-btn">Add New User</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>
+                    <a href="/Admin/EditUser/@user.Id" class="action-btn">Edit</a>
+                    <a href="/Admin/DeleteUser/@user.Id" class="action-btn">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

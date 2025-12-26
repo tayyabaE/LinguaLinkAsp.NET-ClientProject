@@ -1,0 +1,129 @@
+﻿@model Web_Based_Learning_System.Models.Course
+@{
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+    ViewData["Title"] = "Add Course";
+}
+
+<style>
+    .add-course-wrapper {
+        max-width: 700px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+
+    h2 {
+        color: #1e3a8a;
+        margin-bottom: 20px;
+    }
+
+    form {
+        background-color: white;
+        padding: 25px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+        width: 90%;
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        color: #1e293b;
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+        }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    /* Submit Button */
+    button[type="submit"] {
+        padding: 10px 25px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+    }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(37, 99, 235, 0.4);
+        }
+        .success-msg {
+        padding: 12px 20px;
+        background-color: #22c55e; /* green */
+        color: white;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 8px rgba(34, 197, 94, 0.3);
+        font-weight: 500;
+        animation: fadeOut 5s forwards;
+    }
+
+    
+</style>
+
+<div class="add-course-wrapper">
+    <h2>Add New Course</h2>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="success-msg" id="successMsg">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <form method="post" asp-controller="Instructor" asp-action="AddCourse">
+        
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <label>Course Name</label>
+        <input type="text" asp-for="Name" placeholder="Enter course name" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <label>Description</label>
+        <textarea asp-for="Description" placeholder="Enter course description" required></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+
+        <label>Level</label>
+        <select asp-for="Level" required>
+            <option value="">-- Select Level --</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+        </select>
+        <span asp-validation-for="Level" class="text-danger"></span>
+
+        <br />
+        <button type="submit">Add Course</button>
+    </form>
+
+
+</div>
