@@ -257,15 +257,26 @@ public IActionResult Progress()
                                   .Where(q => q.CourseId == courseId)
                                   .ToList();
 
+            var vocab = _context.Vocabularies
+                                .Where(v => v.CourseId == courseId)
+                                .ToList();
+
+            var pron = _context.Pronunciations
+                               .Where(p => p.CourseId == courseId)
+                               .ToList();
+
             var vm = new CourseDetailsViewModel
             {
                 Course = course,
                 Lessons = course.Lessons.OrderBy(l => l.OrderNo).ToList(),
-                Quizzes = quizzes
+                Quizzes = quizzes,
+                Vocabularies = vocab,
+                Pronunciations = pron
             };
 
             return View(vm);
         }
+
 
         public IActionResult LessonDetails(int lessonId)
         {

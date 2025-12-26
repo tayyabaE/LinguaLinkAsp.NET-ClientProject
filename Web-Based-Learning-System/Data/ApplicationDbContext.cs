@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Web_Based_Learning_System.Controllers;
 using Web_Based_Learning_System.Models;
 
 namespace Web_Based_Learning_System.Data
@@ -14,6 +15,8 @@ namespace Web_Based_Learning_System.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<QuizAttempt> QuizAttempts { get; set; }
+        public DbSet<Vocabulary> Vocabularies { get; set;}
+        public DbSet<Pronunciation> Pronunciations { get; set; }
         public DbSet<UserProgress> UserProgress { get; set; }
     }
 }
