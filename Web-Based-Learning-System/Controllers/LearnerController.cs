@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Web_Based_Learning_System.Data;
 using Web_Based_Learning_System.Models;
+using Web_Based_Learning_System.ViewModels;
 
 namespace Web_Based_Learning_System.Controllers
 {
@@ -80,32 +81,54 @@ namespace Web_Based_Learning_System.Controllers
                 });
 
                 _context.SaveChanges();
-                TempData["Success"] = "Lesson marked as completed ✅";
+                TempData["Success"] = "Lesson marked as completed ";
             }
 
-            // Redirect back to the lessons page of the same course
+           
             var lesson = _context.Lessons.Find(lessonId);
             if (lesson == null)
-                return RedirectToAction("AllCourses");
+                return RedirectToAction("CourseDetails");
 
-            return RedirectToAction("Lessons", new { courseId = lesson.CourseId });
+            return RedirectToAction("CourseDetails", "Learner", new { courseId = lesson.CourseId });
         }
 
 
-        public IActionResult Progress()
+
+public IActionResult Progress()
+    {
+        int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+
+        var completedLessons = _context.UserProgress
+            .Where(p => p.UserId == userId)
+            .Include(p => p.Lesson)
+            .ToList();
+
+        var quizAttempts = _context.QuizAttempts
+            .Where(q => q.UserId == userId)
+            .Join(_context.Quizzes,
+                  qa => qa.QuizId,
+                  q => q.Id,
+                  (qa, q) => new QuizAttemptWithQuiz
+                  {
+                      QuizId = q.Id,
+                      Question = q.Question,
+                      IsCorrect = qa.IsCorrect,
+                      AttemptDate = qa.AttemptDate
+                  })
+            .ToList();
+
+        var vm = new LearnerProgressViewModel
         {
-            int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+            CompletedLessons = completedLessons,
+            QuizAttempts = quizAttempts
+        };
 
-            var progress = _context.UserProgress
-                .Where(p => p.UserId == userId)
-                .Include(p => p.Lesson)
-                .ToList();
-
-            return View(progress);
-        }
+        return View(vm);
+    }
 
 
-        [HttpGet]
+
+    [HttpGet]
         public IActionResult Profile()
         {
             var userIdString = HttpContext.Session.GetString("UserId");
@@ -223,6 +246,72 @@ namespace Web_Based_Learning_System.Controllers
 
             return RedirectToAction("MyCourses");
         }
+
+        public IActionResult CourseDetails(int courseId)
+        {
+            var course = _context.Courses
+                                 .Include(c => c.Lessons)
+                                 .FirstOrDefault(c => c.Id == courseId);
+
+            var quizzes = _context.Quizzes
+                                  .Where(q => q.CourseId == courseId)
+                                  .ToList();
+
+            var vm = new CourseDetailsViewModel
+            {
+                Course = course,
+                Lessons = course.Lessons.OrderBy(l => l.OrderNo).ToList(),
+                Quizzes = quizzes
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult LessonDetails(int lessonId)
+        {
+            var lesson = _context.Lessons.FirstOrDefault(l => l.Id == lessonId);
+            if (lesson == null) return NotFound();
+
+            return View(lesson);
+        }
+
+        public IActionResult AttemptQuiz(int quizId)
+        {
+            var quiz = _context.Quizzes.FirstOrDefault(q => q.Id == quizId);
+            if (quiz == null)
+                return NotFound();
+
+            return View(quiz);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SubmitQuiz(int quizId, string answer)
+        {
+            int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+
+            var quiz = _context.Quizzes.Find(quizId);
+            if (quiz == null) return NotFound();
+
+            bool isCorrect = quiz.CorrectAnswer == answer;
+
+            _context.QuizAttempts.Add(new QuizAttempt
+            {
+                UserId = userId,
+                QuizId = quizId,
+                SelectedAnswer = answer,
+                IsCorrect = isCorrect,
+                AttemptDate = DateTime.Now
+            });
+
+            _context.SaveChanges();
+
+            TempData["Success"] = isCorrect ? "Correct Answer 🎉" : "Wrong Answer ❌";
+
+            return RedirectToAction("Progress");
+        }
+
 
     }
 }

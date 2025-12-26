@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web_Based_Learning_System.Models
+namespace Web_Based_Learning_System.ViewModels
 {
     public class UserViewModel
     {

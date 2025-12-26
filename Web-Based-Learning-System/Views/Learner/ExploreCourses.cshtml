@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Web_Based_Learning_System.Models.LearnerCourseViewModel>
+﻿@using Web_Based_Learning_System.ViewModels
+@model IEnumerable<LearnerCourseViewModel>
 
 @{
     Layout = "~/Views/Shared/_LearnerLayout.cshtml";
@@ -144,27 +145,24 @@
     @foreach (var course in Model)
     {
         <div class="course-card">
-            
-            <span class="course-level 
-                  @(course.Level == "Beginner" ? "level-beginner" :
-                    course.Level == "Intermediate" ? "level-intermediate" :
-                    "level-advanced")">
-                @course.Level
-            </span>
+
+            <span class="course-level
+              @(course.Level == "Beginner" ? "level-beginner" :
+                              course.Level == "Intermediate" ? "level-intermediate" :
+                              "level-advanced")">
+            @course.Level
+        </span>
 
             <h3>@course.Name</h3>
             <p>@course.Description</p>
 
-            @if (course.IsEnrolled)
-            {
-                <span class="enrolled-badge">Enrolled ✔</span>
-                
-                <a class="btn"
-                   href="@Url.Action("Lessons", "Learner", new { courseId = course.CourseId })">
-                    View Lessons
-                </a>
-            }
-            else
+            <a class="btn"
+               href="@Url.Action("CourseDetails", "Learner", new { courseId = course.CourseId })"
+               style="background:#059669;margin-bottom:10px;">
+                View Course
+            </a>
+
+        @if (!course.IsEnrolled)
             {
                 <form asp-action="Enroll" method="post">
                     @Html.AntiForgeryToken()
@@ -172,6 +170,11 @@
                     <button type="submit" class="btn">Enroll</button>
                 </form>
             }
+            else
+            {
+                <span class="enrolled-badge">Enrolled ✔</span>
+            }
         </div>
+
     }
 </div>

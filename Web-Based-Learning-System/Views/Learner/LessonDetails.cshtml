@@ -1,0 +1,97 @@
+﻿@model Lesson
+@{
+    Layout = "~/Views/Shared/_LearnerLayout.cshtml";
+    ViewData["Title"] = "Lesson Detail";
+}
+
+<style>
+    /* --- LESSON DETAILS PAGE STYLING (Learner View) --- */
+    .lesson-content-wrapper {
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    /* Main Lesson Card/Container */
+    .lesson-content-card {
+        background-color: white;
+        padding: 35px 45px; /* Generous padding for content */
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        color: #1e3a8a; /* Deep blue title */
+        font-size: 2.2rem;
+        margin-top: 0;
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #f1f5f9;
+        font-weight: 700;
+    }
+
+    /* Lesson Content Styling (for the <p>@Model.Content </p > ) */
+    .lesson-content {
+        color: #1e293b;
+        font-size: 1.1rem; /* Highly readable font size */
+        line-height: 1.8; /* Increased line height for better flow */
+        margin-bottom: 40px;
+        white-space: pre-wrap; /* Ensures content preserves formatting if any, otherwise standard flow */
+    }
+
+    /* Styling for paragraphs within the content area */
+    .lesson-content p {
+        margin-bottom: 1.5em;
+    }
+
+    /* Completion Form and Button */
+    .completion-form {
+        text-align: right;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-success {
+        padding: 12px 25px;
+        background: linear-gradient(135deg, #22c55e, #16a34a); /* Green gradient */
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #16a34a, #057833);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(34, 197, 94, 0.5);
+        }
+</style>
+
+<div class="lesson-content-wrapper">
+    <div class="lesson-content-card">
+
+        <h2>@Model.Title</h2>
+
+        <div class="lesson-content">
+            @* We wrap the model content in a div to apply consistent styling to the text *@
+            @Html.Raw(Model.Content)
+        </div>
+
+        <form method="post" asp-action="CompleteLesson" class="completion-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="lessonId" value="@Model.Id" />
+
+            <button type="submit" class="btn-success">
+                Mark as Completed ✔
+            </button>
+        </form>
+    </div>
+</div>

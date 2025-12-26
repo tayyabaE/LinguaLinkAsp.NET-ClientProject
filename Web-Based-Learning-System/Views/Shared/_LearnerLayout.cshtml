@@ -66,8 +66,9 @@
             var currentPath = Context.Request.Path.Value;
 
             string GetActiveClass(string path) =>
-            (currentPath != null && currentPath.Equals(path, StringComparison.OrdinalIgnoreCase)) ? "active" : "";
+            currentPath != null && currentPath.StartsWith(path, StringComparison.OrdinalIgnoreCase) ? "active" : "";
         }
+
 
         <a href="/Learner/Index" class="@GetActiveClass("/Learner/Index")">
             Dashboard

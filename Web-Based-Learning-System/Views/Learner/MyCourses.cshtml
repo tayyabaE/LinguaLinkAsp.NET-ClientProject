@@ -56,12 +56,13 @@
         <div class="dashboard-cards">
             @foreach (var course in Model)
             {
-                <a href="@Url.Action("Lessons", "Learner", new { courseId = course.Id })"
+                <a href="@Url.Action("CourseDetails", "Learner", new { courseId = course.Id })"
                    class="card">
                     <h3>@course.Name</h3>
                     <p>Level: @course.Level</p>
                 </a>
             }
         </div>
+
     }
 </div>

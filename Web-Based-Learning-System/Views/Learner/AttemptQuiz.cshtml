@@ -1,0 +1,146 @@
+﻿@model Quiz
+@{
+    Layout = "~/Views/Shared/_LearnerLayout.cshtml";
+    ViewData["Title"] = "Attempt Quiz";
+}
+
+<style>
+    .quiz-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .quiz-card {
+        background-color: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+    }
+
+    h2 {
+        color: #1e3a8a; 
+        margin-bottom: 25px;
+        font-size: 2rem;
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 10px;
+    }
+
+    .question-text {
+        font-size: 1.35rem;
+        color: #1e293b;
+        margin-bottom: 30px;
+        font-weight: 600;
+        line-height: 1.5;
+        padding: 10px;
+        background-color: #f8fafc; 
+        border-left: 5px solid #3b82f6;
+        border-radius: 4px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        display: block;
+        padding: 15px 20px;
+        margin-bottom: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        color: #334155;
+        transition: all 0.2s ease;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+
+        label:hover {
+            background-color: #f1f5f9;
+            border-color: #3b82f6;
+        }
+
+    input[type="radio"] {
+        margin-right: 15px;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #94a3b8;
+        border-radius: 50%;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+        transition: all 0.2s;
+    }
+
+        input[type="radio"]:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+            input[type="radio"]:checked::before {
+                content: '';
+                display: block;
+                width: 8px;
+                height: 8px;
+                background: white;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+    .submit-button {
+        width: 100%;
+        padding: 14px 25px;
+        margin-top: 30px;
+        background: linear-gradient(135deg, #22c55e, #16a34a); 
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
+    }
+
+        .submit-button:hover {
+            background: linear-gradient(135deg, #16a34a, #057833);
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="quiz-container">
+    <div class="quiz-card">
+        <h2>Lesson Quiz</h2>
+
+        <div class="question-text">@Model.Question</div>
+
+        <form method="post" asp-action="SubmitQuiz">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="quizId" value="@Model.Id" />
+
+            <label>
+                <input type="radio" name="answer" value="A" required />
+                @Model.OptionA
+            </label>
+
+            <label>
+                <input type="radio" name="answer" value="B" required />
+                @Model.OptionB
+            </label>
+
+            <label>
+                <input type="radio" name="answer" value="C" required />
+                @Model.OptionC
+            </label>
+
+            <button type="submit" class="submit-button">Submit Answer</button>
+        </form>
+    </div>
+</div>

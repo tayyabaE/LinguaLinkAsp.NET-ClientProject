@@ -12,6 +12,8 @@ namespace Web_Based_Learning_System.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<QuizAttempt> QuizAttempts { get; set; }
         public DbSet<UserProgress> UserProgress { get; set; }
     }
 }

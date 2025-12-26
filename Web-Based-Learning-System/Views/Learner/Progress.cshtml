@@ -1,6 +1,7 @@
-﻿@model IEnumerable<UserProgress>
+﻿@model Web_Based_Learning_System.ViewModels.LearnerProgressViewModel
 @{
     Layout = "~/Views/Shared/_LearnerLayout.cshtml";
+    ViewData["Title"] = "Progress";
 }
 
 <style>
@@ -63,22 +64,51 @@
 
 
 <div class="container progress-container-wrapper">
-    <h2>My Progress</h2>
+    <h2>📘 Lesson Progress</h2>
 
     <div class="progress-container">
-        @foreach (var item in Model)
+        @foreach (var item in Model.CompletedLessons)
         {
             var isCompleted = item.IsCompleted;
-            
+
             <div class="progress-card @(isCompleted ? "completed" : "pending")">
                 <p>
                     <strong>@item.Lesson.Title</strong>
-                    
                     <span class="@(isCompleted ? "status-completed" : "status-pending")">
                         @(isCompleted ? "Completed ✅" : "Pending ⏳")
                     </span>
                 </p>
-                </div>
+
+                @if (item.CompletedDate != null)
+                {
+                    <p>
+                        Completed On:
+                        <strong>@item.CompletedDate.Value.ToString("dd MMM yyyy")</strong>
+                    </p>
+                }
+            </div>
         }
     </div>
+
+    <h2 style="margin-top:40px;">📝 Quiz Attempts</h2>
+
+    <div class="progress-container">
+        @foreach (var quiz in Model.QuizAttempts)
+        {
+            <div class="progress-card @(quiz.IsCorrect ? "completed" : "pending")">
+                <p>
+                    <strong>@quiz.Question</strong>
+                    <span class="@(quiz.IsCorrect ? "status-completed" : "status-pending")">
+                        @(quiz.IsCorrect ? "Correct ✅" : "Wrong ❌")
+                    </span>
+                </p>
+
+                <p>
+                    Attempted On:
+                    <strong>@quiz.AttemptDate.ToString("dd MMM yyyy")</strong>
+                </p>
+            </div>
+        }
+    </div>
+
 </div>
