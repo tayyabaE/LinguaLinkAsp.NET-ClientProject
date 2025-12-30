@@ -28,5 +28,25 @@ namespace Web_Based_Learning_System.Controllers
         {
             return View();
         }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult FAQ()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Terms()
+        {
+            return View();
+        }
+
     }
 }

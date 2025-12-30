@@ -4,147 +4,306 @@
 }
 
 <style>
-    
-    .hero {
-        text-align: center;
-        padding: 50px 20px;
-        margin-bottom: 50px;
-        background: linear-gradient(145deg, #e0f2fe, #ffffff);
-        border-radius: 10px;
-        box-shadow: 0 6px 18px rgba(30, 58, 138, 0.1); 
+    /* --- General Page Structure and Typography --- */
+    body {
+        background-color: #f8f9fa; /* Lighter background for content area */
+        color: #343a40; /* Default text color */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
     }
 
-        .hero h1 {
-            font-size: 3rem; 
-            color: #1e3a8a;
-            margin-bottom: 12px;
-            font-weight: 800;
-        }
+    h1, h2, h3 {
+        color: #1e3a8a; /* Dark blue for primary headings */
+        font-weight: 700;
+    }
 
-        .hero p {
-            font-size: 1.3rem;
-            color: #475569;
-            margin-bottom: 25px; 
-        }
+    h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+    }
 
-        .hero .btn-primary {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
-        }
-
-            .hero .btn-primary:hover {
-                background: linear-gradient(135deg, #2563eb, #1e40af);
-                transform: translateY(-2px);
-            }
-
-    .features-grid {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
+    .section-heading {
+        text-align: center;
         margin-bottom: 50px;
+        color: #1e3a8a;
+        font-size: 2.8rem;
+        font-weight: 800;
+        position: relative;
+    }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #3b82f6; /* Accent blue underline */
+            border-radius: 2px;
+        }
+
+    /* --- Buttons --- */
+    .btn-primary, .btn-secondary {
+        display: inline-block;
+        padding: 14px 35px; /* Larger padding for buttons */
+        background: linear-gradient(135deg, #3b82f6, #2563eb); /* Primary blue gradient */
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 30px; /* Pill-shaped buttons */
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af); /* Darker gradient on hover */
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6);
+        }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #1e3a8a, #007bff); /* Slightly different gradient for secondary CTA */
+        box-shadow: 0 6px 15px rgba(30, 58, 138, 0.3);
+    }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #007bff, #1e3a8a);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+        }
+
+    /* --- Hero Section --- */
+    .hero-section {
+        position: relative;
+        padding: 120px 20px; /* Increased vertical padding */
+        text-align: center;
+
+        color: white; /* Text color for hero content */
+        margin-bottom: 60px;
+        border-radius: 15px; /* Rounded corners for the entire hero block */
+        overflow: hidden; /* Ensures background image stays within bounds */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Stronger shadow */
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://plus.unsplash.com/premium_photo-1663040081470-397e31e4b2a6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover; /* Dynamic background image */
+        filter: brightness(0.4) grayscale(0.2); /* Darken and slightly desaturate image */
+        z-index: 0;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1; /* Ensure content is above the background */
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+        .hero-content h1 {
+            font-size: 4.5rem; /* Larger hero title */
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            color: white; /* Keep hero title white */
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+            color: white; /* Keep hero paragraph white */
+        }
+
+    /* --- Features Section --- */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted minwidth for cards */
+        gap: 30px; /* Increased gap */
+        margin-bottom: 60px;
     }
 
     .feature-card {
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-        border-top: 4px solid #3b82f6;
-        transition: transform 0.3s, box-shadow 0.3s;
+        background-color: white;
+        padding: 30px; /* Increased padding */
+        border-radius: 12px; /* More rounded corners */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* More prominent shadow */
+        border-top: 5px solid #3b82f6; /* Thicker, vibrant border top */
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        text-align: center;
+        display: flex; /* Flexbox for content alignment */
+        flex-direction: column;
+        align-items: center;
     }
 
         .feature-card:hover {
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px); /* More dramatic lift on hover */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
         }
 
-        .feature-card .icon {
-            font-size: 2rem;
-            color: #3b82f6;
-            margin-bottom: 8px;
+        .feature-card .icon-circle {
+            background-color: #e0f2fe; 
+            color: #1e3a8a;
+            font-size: 2.5rem; 
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); 
         }
 
         .feature-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
+            font-size: 1.5rem; 
+            margin-bottom: 12px;
+            color: #1e3a8a;
         }
 
         .feature-card p {
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            color: #555;
+            flex-grow: 1; 
         }
 
-    .cta-banner {
-        padding: 30px 20px;
-        border-radius: 10px;
-        margin-bottom: 30px;
+    .cta-banner-section {
+        background: linear-gradient(100deg, #1e3a8a, #3b82f6); 
+        color: white;
+        text-align: center;
+        padding: 80px 20px; 
+        border-radius: 15px;
+        margin-bottom: 60px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
-        .cta-banner h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .cta-banner p {
-            font-size: 1rem; 
+        .cta-banner-section h2 {
+            font-size: 3rem; 
             margin-bottom: 20px;
+            color: white;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
         }
 
-        
-        .cta-banner .btn-secondary {
-            display: inline-block;
-            padding: 12px 30px;
-             background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background 0.3s;
+        .cta-banner-section p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
         }
-            .cta-banner  .btn-secondary:hover{
-                background: linear-gradient(135deg, #2563eb, #1e40af);
-                transform: translateY(-2px);
+
+    @@media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 3rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+        }
+
+        .section-heading {
+            font-size: 2rem;
+        }
+
+        .cta-banner-section h2 {
+            font-size: 2rem;
+        }
+
+        .cta-banner-section p {
+            font-size: 1rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr; 
+        }
+    }
+
+    @@media (max-width: 480px) {
+        nav {
+            padding: 10px 20px;
+        }
+
+            nav .logo {
+                font-size: 24px;
             }
-            
+
+            nav .nav-links {
+                display: none;
+            }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+        }
+
+        .hero-section {
+            padding: 80px 15px;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 10px 25px;
+            font-size: 1rem;
+        }
+
+        .section-heading {
+            font-size: 1.8rem;
+        }
+    }
+
 </style>
 
 <div class="container">
-    
-    <div class="hero">
-        <h1>Welcome to LinguaLink</h1>
-        <p>Learn languages online with interactive resources and connect with a global community.</p>
-        <a href="@Url.Action("Register", "Account")" class="btn-primary">Start Learning for Free Today</a>
-    </div>
 
-    <div class="features-grid">
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1>Unlock Your Global Voice</h1>
+            <p>Master new languages with interactive lessons, personalized learning paths, and a supportive community.</p>
+            <a href="@Url.Action("Register", "Account")" class="btn-primary">Start Your Language Journey Today</a>
+        </div>
+    </section>
+
+    <h2 class="section-heading">Why Choose LinguaLink?</h2>
+    <section class="features-grid">
         <div class="feature-card">
-            <div class="icon">📖</div>
-            <h3>Structured Courses</h3>
-            <p>From Beginner to Advanced, follow a clear path designed by language experts.</p>
+            <div class="icon-circle">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <h3>Comprehensive Curriculum</h3>
+            <p>Dive into expertly designed courses from beginner to advanced levels, covering grammar, vocabulary, and culture.</p>
         </div>
         <div class="feature-card">
-            <div class="icon">🗣️</div>
-            <h3>Real-Life Conversation</h3>
-            <p>Focus on practical skills with exercises based on everyday situations.</p>
+            <div class="icon-circle">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h3>Interactive Practice</h3>
+            <p>Engage with speaking exercises, listening comprehension, and writing prompts to build fluency naturally.</p>
         </div>
         <div class="feature-card">
-            <div class="icon">🌐</div>
-            <h3>Global Access</h3>
-            <p>Flexible lessons allow you to study whenever and wherever you choose.</p>
+            <div class="icon-circle">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Learn Anywhere, Anytime</h3>
+            <p>Access your lessons on any device, seamlessly picking up where you left off, whether on desktop or mobile.</p>
         </div>
-    </div>
-    
-    <div class="cta-banner">
-        <h2>Ready to break the language barrier?</h2>
-        <p>Join thousands of happy learners who are mastering new languages with LinguaLink.</p>
+    </section>
+
+    <section class="cta-banner-section">
+        <h2>Ready to Master a New Language?</h2>
+        <p>Thousands of passionate learners are already expanding their horizons with LinguaLink. Join our global community today!</p>
         <a href="@Url.Action("Courses", "Home")" class="btn-secondary">Explore All Courses</a>
-    </div>
+    </section>
 
 </div>

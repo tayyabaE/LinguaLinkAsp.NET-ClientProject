@@ -1,0 +1,200 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Terms of Service";
+}
+
+<style>
+    /* --- General Terms Page Styles (White & Blue Theme) --- */
+    .terms-page-content {
+        padding: 30px 0; /* Slightly reduced padding */
+        background-color: #f4f7fa; /* Very light, subtle background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean, modern font */
+        line-height: 1.5; /* Slightly tighter line height */
+    }
+
+    .terms-header-section {
+        text-align: center;
+        margin-bottom: 30px; /* Reduced margin */
+        padding: 15px;
+        background-color: #e6f3ff; /* Very light blue header background */
+        border-radius: 6px;
+        border-bottom: 3px solid #007bff; /* Blue accent line */
+    }
+
+        .terms-header-section h1 {
+            color: #007bff; /* Primary Blue for headings */
+            font-weight: 700;
+            margin-bottom: 3px;
+            font-size: 1.8em; /* Reduced heading size */
+        }
+
+            .terms-header-section h1 i {
+                margin-right: 8px;
+            }
+
+    .effective-date {
+        font-style: italic;
+        color: #6c757d;
+        margin-bottom: 15px; /* Reduced margin */
+        font-size: 0.9em;
+    }
+
+    .intro-statement {
+        font-size: 1.0em; /* Slightly smaller font */
+        color: #343a40;
+    }
+
+    /* --- Policy Sections --- */
+    .terms-sections {
+        max-width: 800px; /* Reduced max width for compactness */
+        margin: 0 auto;
+        padding: 25px; /* Reduced padding */
+        background-color: #ffffff;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+        .terms-sections section {
+            margin-bottom: 25px; /* Reduced margin */
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+            .terms-sections section:last-child {
+                border-bottom: none;
+            }
+
+    .article-heading {
+        color: #007bff; /* Primary Blue */
+        border-left: 4px solid #007bff; /* Blue accent line */
+        padding-left: 12px;
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.4em; /* Reduced heading size */
+    }
+
+    .terms-sections p {
+        margin-bottom: 10px;
+        color: #495057;
+        font-size: 0.95em; /* Smaller paragraph font */
+    }
+
+    /* List Styling */
+    .terms-sections ul, .terms-sections ol {
+        padding-left: 20px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        font-size: 0.95em; /* Smaller list font */
+    }
+
+        .terms-sections ul li, .terms-sections ol li {
+            margin-bottom: 6px;
+            color: #495057;
+        }
+
+    /* Disclaimer Text */
+    .disclaimer-text {
+        background-color: #fff3cd; /* Light warning yellow */
+        border-left: 5px solid #ffc107; /* Yellow warning border */
+        padding: 12px;
+        font-weight: 500;
+        color: #856404;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+    /* Contact Note Blockquote */
+    .contact-note {
+        background-color: #f8f9fa; /* Light gray background */
+        border-left: 5px solid #007bff;
+        padding: 12px;
+        margin: 15px 0;
+        font-style: italic;
+        color: #007bff; /* Blue contact text */
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+        .contact-note i {
+            margin-right: 6px;
+            color: #007bff;
+        }
+</style>
+<div class="terms-page-content">
+
+    <div class="container terms-header-section">
+        <h1><i class="fas fa-file-contract"></i> LinguaLink Terms of Service</h1>
+        <p class="effective-date">
+            **Effective Date:** January 1, 2026
+        </p>
+        <p class="intro-statement">
+            Welcome to LinguaLink! These Terms of Service ("Terms") govern your use of the Services. By accessing or using our Services, you agree to be bound by these Terms.
+        </p>
+    </div>
+
+    <div class="container terms-sections">
+
+        <section>
+            <h2 class="article-heading">Article I. Acceptance of Terms</h2>
+            <p>
+                By creating an account, accessing, or using the Services, you affirm that you are at least 18 years old or possess legal parental or guardian consent, and are fully able and competent to enter into these Terms.
+            </p>
+            <p>
+                <strong>Important Note:</strong> If you do not agree with all of these Terms, you are expressly prohibited from using the Services and must discontinue use immediately.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="article-heading">Article II. User Accounts and Responsibilities</h2>
+            <p>
+                You are responsible for safeguarding the password that you use to access the Services and for any activities or actions under your password.
+            </p>
+            <ul>
+                <li>**Accuracy:** You agree to provide accurate and complete information when registering.</li>
+                <li>**Security:** You must notify LinguaLink immediately upon becoming aware of any breach of security or unauthorized use of your account.</li>
+                <li>**One Account:** Each individual is limited to one free user account.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="article-heading">Article III. Intellectual Property and Usage License</h2>
+            <p>
+                All content, features, and functionality (including but not limited to design, software, text, graphics, and course material) are owned by LinguaLink and are protected by international copyright laws.
+            </p>
+            <ol>
+                <li>**Limited License:** We grant you a limited, non-exclusive, non-transferable license to access and use the Services for your personal, non-commercial, educational purposes.</li>
+                <li>**Restrictions:** You agree not to copy, modify, distribute, sell, or reverse-engineer any part of the Services or content without prior written permission.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2 class="article-heading">Article IV. Prohibited Conduct</h2>
+            <p>
+                You agree not to use the Services in a way that:
+            </p>
+            <ul>
+                <li>Violates any applicable local, national, or international law or regulation.</li>
+                <li>Infringes on the rights of any third party, including copyright, trademark, or privacy rights.</li>
+                <li>Involves the transmission of unsolicited mass mailings or "spam."</li>
+                <li>Attempts to interfere with the proper working of the Services.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="article-heading">Article V. Disclaimers and Limitation of Liability</h2>
+            <p>
+                The Services are provided on an "AS IS" and "AS AVAILABLE" basis. LinguaLink makes no warranties, expressed or implied, regarding the operation or availability of the Services.
+            </p>
+            <p class="disclaimer-text">
+                <strong>Limitation of Liability:</strong> In no event shall LinguaLink be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill.
+            </p>
+        </section>
+
+        <blockquote class="contact-note">
+            <i class="fas fa-gavel"></i> For any questions regarding these Terms, please contact us at <a href="mailto:legal@lingualink.com">legal@lingualink.com</a>.
+        </blockquote>
+
+    </div>
+
+</div>

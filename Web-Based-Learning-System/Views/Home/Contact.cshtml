@@ -1,0 +1,247 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Contact Us";
+}
+<style>
+    /* --- General Contact Page Styles --- */
+    .contact-page-content {
+        padding: 40px 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a clean, modern font */
+        background-color: #f8f9fa; /* Light background for the page */
+    }
+
+    .contact-header-section {
+        text-align: center;
+        margin-bottom: 50px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+        .contact-header-section h1 {
+            color: #007bff; /* Primary brand color */
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+            .contact-header-section h1 i {
+                margin-right: 10px;
+            }
+
+    .subtitle {
+        font-size: 1.1em;
+        color: #6c757d;
+    }
+
+    /* --- Contact Info Cards --- */
+    .contact-info-section {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        margin-bottom: 50px;
+        padding: 0 15px;
+    }
+
+    .info-card {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1); /* Subtle shadow with brand color hint */
+        text-align: center;
+        flex: 1; /* Make cards flexible and equal width */
+        transition: transform 0.3s ease-in-out;
+        border-top: 5px solid #007bff;
+    }
+
+        .info-card:hover {
+            transform: translateY(-5px); /* Lift card on hover */
+        }
+
+        .info-card i {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+    .contact-detail {
+        font-weight: bold;
+        color: #28a745; /* Success/Highlight color */
+        font-size: 1.1em;
+    }
+
+    /* --- Contact Form Styling --- */
+    .contact-form-section {
+        max-width: 700px;
+        margin: 0 auto 50px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+        .contact-form-section h2 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 25px;
+        }
+
+            .contact-form-section h2 i {
+                color: #dc3545; /* A vibrant accent color */
+                margin-right: 8px;
+            }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+            transition: border-color 0.3s;
+        }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                border-color: #007bff;
+                outline: none;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+            }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .submit-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .submit-button i {
+            margin-right: 5px;
+        }
+
+    /* --- Map Section --- */
+    .map-section {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background-color: #e9ecef;
+        border-radius: 8px;
+    }
+
+    .address-box {
+        border: 1px dashed #6c757d;
+        padding: 15px;
+        display: inline-block;
+        margin: 15px 0;
+        background-color: #ffffff;
+        border-radius: 4px;
+    }
+
+    .map-placeholder {
+        width: 100%;
+        height: 300px;
+        background-color: #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #343a40;
+        font-style: italic;
+        border-radius: 4px;
+        margin-top: 15px;
+    }
+</style>
+<div class="contact-page-content">
+
+    <div class="container contact-header-section">
+        <h1><i class="fas fa-headset"></i> Get In Touch</h1>
+        <p class="subtitle">
+            We're here to help! Reach out to us with any questions, feedback, or support needs, and we'll connect you with the right team.
+        </p>
+    </div>
+
+    <div class="container contact-info-section">
+        <div class="info-card">
+            <i class="fas fa-envelope fa-3x"></i>
+            <h3>Email Support</h3>
+            <p>For general inquiries and technical support.</p>
+            <p class="contact-detail">support@lingualink.com</p>
+        </div>
+        <div class="info-card">
+            <i class="fas fa-phone-alt fa-3x"></i>
+            <h3>Phone Helpline</h3>
+            <p>Speak directly to a representative during business hours.</p>
+            <p class="contact-detail">+92 300 1234567</p>
+        </div>
+        <div class="info-card">
+            <i class="fas fa-clock fa-3x"></i>
+            <h3>Business Hours</h3>
+            <p>Monday - Friday</p>
+            <p class="contact-detail">9:00 AM - 5:00 PM PKT</p>
+        </div>
+    </div>
+
+    <div class="container contact-form-section">
+        <h2><i class="fas fa-paper-plane"></i> Send Us A Message</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-button"><i class="fas fa-check-circle"></i> Send Message</button>
+        </form>
+    </div>
+
+    @* <div class="container map-section">
+        <h2><i class="fas fa-map-marker-alt"></i> Our Location (Head Office)</h2>
+        <p>While we primarily offer online services, here is our head office address:</p>
+        <div class="address-box">
+            <p><strong>LinguaLink Inc.</strong></p>
+            <p>123 Tech Avenue, Software Park</p>
+            <p>Islamabad, Pakistan 44000</p>
+        </div>
+      
+    </div> *@
+
+</div>

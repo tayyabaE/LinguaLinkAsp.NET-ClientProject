@@ -1,0 +1,209 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "FAQ";
+}
+<style>
+    /* --- General FAQ Page Styles --- */
+    .faq-page-content {
+        padding: 40px 0;
+        background-color: #f4f7f9; /* Light, soft background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .faq-header-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+        .faq-header-section h1 {
+            color: #34495e; /* Darker heading color */
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+            .faq-header-section h1 i {
+                color: #e74c3c; /* Accent color for the icon */
+                margin-right: 10px;
+            }
+
+    .subtitle {
+        font-size: 1.1em;
+        color: #7f8c8d;
+    }
+
+    /* --- Accordion Container --- */
+    .faq-accordion {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        margin-bottom: 15px;
+        border: 1px solid #bdc3c7;
+        border-radius: 8px;
+        overflow: hidden; /* Important for the smooth transition */
+        background-color: #ffffff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* Hide the actual checkbox input */
+    .faq-toggle {
+        display: none;
+    }
+
+    /* Style the question label */
+    .faq-question {
+        display: block;
+        padding: 18px 25px;
+        background-color: #ecf0f1; /* Light background for the question */
+        color: #2c3e50;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 600;
+        transition: background-color 0.3s;
+        user-select: none; /* Prevent text selection on click */
+        position: relative;
+    }
+
+        .faq-question:hover {
+            background-color: #dce0e4;
+        }
+
+        /* Icon (plus/minus) styling */
+        .faq-question .icon {
+            margin-right: 15px;
+            color: #2980b9; /* A professional blue accent */
+            transition: transform 0.3s ease;
+        }
+
+    /* Style the answer content (hidden by default) */
+    .faq-answer {
+        max-height: 0;
+        padding: 0 25px;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        background-color: #ffffff;
+    }
+
+        .faq-answer p {
+            padding: 15px 0;
+            margin: 0;
+            line-height: 1.6;
+            color: #34495e;
+            border-top: 1px solid #ecf0f1; /* Separator line */
+        }
+
+    /* --- Accordion Functionality (CSS only) --- */
+
+    /* When the checkbox is checked, expand the answer */
+    .faq-toggle:checked ~ .faq-answer {
+        max-height: 300px; /* Adjust this value to be greater than the max answer height */
+        padding: 0 25px 15px 25px;
+    }
+
+    /* Rotate the icon when the question is checked/open */
+    .faq-toggle:checked ~ .faq-question .icon i {
+        transform: rotate(45deg); /* Changes the plus to an 'X' or 'close' look */
+        color: #e74c3c; /* Change icon color when open */
+    }
+
+    /* --- Contact Prompt --- */
+    .contact-prompt {
+        text-align: center;
+        margin-top: 40px;
+        padding: 30px;
+        background-color: #ecf0f1;
+        border-radius: 8px;
+        border-top: 3px solid #3498db;
+    }
+
+    .contact-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        font-weight: 500;
+    }
+
+        .contact-button:hover {
+            background-color: #2980b9;
+        }
+</style>
+<div class="faq-page-content">
+
+    <div class="container faq-header-section">
+        <h1><i class="fas fa-question-circle"></i> Frequently Asked Questions</h1>
+        <p class="subtitle">
+            Find quick answers to the most common questions about our platform, courses, and pricing.
+        </p>
+    </div>
+
+    <div class="container faq-accordion">
+
+        <div class="faq-item">
+            <input type="checkbox" id="q1" class="faq-toggle">
+            <label for="q1" class="faq-question">
+                <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                Is LinguaLink free to use?
+            </label>
+            <div class="faq-answer">
+                <p>Yes, you can start learning with our **Basic Tier** which includes access to introductory lessons, vocabulary builders, and core grammar exercises for free. We also offer premium subscriptions for advanced content and personalized coaching.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="q2" class="faq-toggle">
+            <label for="q2" class="faq-question">
+                <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                Do I need prior experience to start a course?
+            </label>
+            <div class="faq-answer">
+                <p>No, absolutely not! Our courses are designed to accommodate all levels, from **absolute beginners (A1)** up to advanced speakers (C2). When you sign up, you'll take a quick assessment to place you in the perfect starting lesson.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="q3" class="faq-toggle">
+            <label for="q3" class="faq-question">
+                <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                Can I learn at my own pace?
+            </label>
+            <div class="faq-answer">
+                <p>Yes, all of our courses are **100% self-paced**. You have lifetime access to the material once enrolled (or while your subscription is active), allowing you to review lessons, take breaks, and progress whenever it suits your schedule.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="q4" class="faq-toggle">
+            <label for="q4" class="faq-question">
+                <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                What languages are currently offered on LinguaLink?
+            </label>
+            <div class="faq-answer">
+                <p>We currently offer comprehensive courses in **Spanish, French, German, Mandarin Chinese, and Japanese**. We are continuously developing new content, with plans to launch Italian and Arabic next quarter!</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <input type="checkbox" id="q5" class="faq-toggle">
+            <label for="q5" class="faq-question">
+                <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                Are the lessons taught by real people?
+            </label>
+            <div class="faq-answer">
+                <p>Our core content utilizes a blend of high-quality, pre-recorded videos featuring **native-speaking tutors** and interactive, AI-powered exercises. Premium members can also book one-on-one live conversation sessions.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container contact-prompt">
+        <p>Still have questions? Our support team is here to help.</p>
+        <a href="@Url.Action("Contact", "Home")" class="contact-button"><i class="fas fa-envelope"></i> Contact Support</a>
+    </div>
+
+</div>
