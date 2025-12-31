@@ -4,14 +4,12 @@
 }
 
 <style>
-    /* --- General Layout --- */
     .about-page-wrapper {
         max-width: 1000px;
         margin: 40px auto;
         padding: 0 20px;
     }
 
-    /* --- Hero and Title --- */
     .about-hero-section {
         text-align: center;
         margin-bottom: 60px;
@@ -23,26 +21,25 @@
 
         .about-hero-section h1 {
             font-size: 3rem;
-            color: #1e3a8a; /* Dark Blue */
+            color: #1e3a8a; 
             margin-bottom: 5px;
             font-weight: 800;
         }
 
         .about-hero-section .tagline {
             font-size: 1.3rem;
-            color: #3b82f6; /* Accent Blue */
+            color: #3b82f6; 
             margin-top: 15px;
             font-style: italic;
         }
 
-    /* --- Featured Accent Block (Our Story) --- */
     .featured-story-block {
         display: flex;
         align-items: center;
         gap: 40px;
         margin-bottom: 60px;
         padding: 40px;
-        background: linear-gradient(45deg, #e6f3ff, #f8f9fa); /* Light gradient background */
+        background: linear-gradient(45deg, #e6f3ff, #f8f9fa);
         border-left: 5px solid #3b82f6;
         border-radius: 12px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -52,7 +49,6 @@
         flex: 3;
     }
 
-        /* FIX 1: Increased padding-left to 35px for text clearance */
         .story-content h3 {
             color: #1e3a8a;
             font-size: 1.8rem;
@@ -61,7 +57,6 @@
             padding-left: 35px;
         }
 
-            /* FIX 1: Adjusted icon position slightly to the right of the edge */
             .story-content h3 i {
                 position: absolute;
                 left: 5px;
@@ -82,12 +77,11 @@
     }
 
         .story-image i {
-            font-size: 8rem; /* Large icon placeholder */
+            font-size: 8rem;
             color: #3b82f6;
             opacity: 0.7;
         }
 
-    /* --- Standard Content Section --- */
     .content-section {
         background-color: #ffffff;
         padding: 30px;
@@ -109,12 +103,11 @@
             line-height: 1.7;
         }
 
-    /* --- List Styling (What We Offer) --- */
     .offer-list {
         list-style: none;
         padding-left: 0;
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Two columns for clarity */
+        grid-template-columns: 1fr 1fr; 
         gap: 15px;
     }
 
@@ -123,7 +116,6 @@
             font-size: 1rem;
             color: #343a40;
             position: relative;
-            /* Padding-left is correct at 35px for text clearance */
             padding-left: 45px;
             font-weight: 500;
             background-color: #f8f9fa;
@@ -132,16 +124,14 @@
             border: 1px solid #e9ecef;
         }
 
-            /* FIX 2: Corrected vertical position of the list icon */
             .offer-list li i {
                 position: absolute;
                 left: 10px;
-                top: 10px; /* Adjusted to 10px to center it vertically better */
+                top: 10px; 
                 color: #28a745;
                 font-size: 1.1em;
             }
 
-    /* --- Vision/Mission Block --- */
     .vision-mission-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -157,16 +147,12 @@
         text-align: center;
     }
 
-        /* FIX 1 applied to mission/vision cards (icon padding) */
         .vision-mission-card h3 {
             color: #1e3a8a;
             border-bottom: none;
             padding-bottom: 0;
             font-size: 1.6rem;
-            /* These cards don't have inline icons, so no padding needed here.
-                   The previous inline styles for story-content h3 were sufficient.
-                   This is a header *above* the icon. No change needed here.
-                */
+          
         }
 
         .vision-mission-card i {
@@ -175,7 +161,6 @@
             margin-bottom: 15px;
         }
 
-    /* --- Responsive Adjustments --- */
     @@media (max-width: 992px) {
         .featured-story-block {
             flex-direction: column;

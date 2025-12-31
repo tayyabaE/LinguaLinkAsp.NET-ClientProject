@@ -3,11 +3,10 @@
     ViewData["Title"] = "Contact Us";
 }
 <style>
-    /* --- General Contact Page Styles --- */
     .contact-page-content {
         padding: 40px 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a clean, modern font */
-        background-color: #f8f9fa; /* Light background for the page */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        background-color: #f8f9fa; 
     }
 
     .contact-header-section {
@@ -20,7 +19,7 @@
     }
 
         .contact-header-section h1 {
-            color: #007bff; /* Primary brand color */
+            color: #007bff; 
             font-weight: 700;
             margin-bottom: 10px;
         }
@@ -34,7 +33,6 @@
         color: #6c757d;
     }
 
-    /* --- Contact Info Cards --- */
     .contact-info-section {
         display: flex;
         justify-content: space-around;
@@ -47,15 +45,15 @@
         background-color: #ffffff;
         padding: 30px;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1); /* Subtle shadow with brand color hint */
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
         text-align: center;
-        flex: 1; /* Make cards flexible and equal width */
+        flex: 1; 
         transition: transform 0.3s ease-in-out;
         border-top: 5px solid #007bff;
     }
 
         .info-card:hover {
-            transform: translateY(-5px); /* Lift card on hover */
+            transform: translateY(-5px); 
         }
 
         .info-card i {
@@ -70,11 +68,10 @@
 
     .contact-detail {
         font-weight: bold;
-        color: #28a745; /* Success/Highlight color */
+        color: #28a745;
         font-size: 1.1em;
     }
 
-    /* --- Contact Form Styling --- */
     .contact-form-section {
         max-width: 700px;
         margin: 0 auto 50px auto;
@@ -91,7 +88,7 @@
         }
 
             .contact-form-section h2 i {
-                color: #dc3545; /* A vibrant accent color */
+                color: #dc3545; 
                 margin-right: 8px;
             }
 
@@ -113,7 +110,7 @@
             padding: 10px;
             border: 1px solid #ced4da;
             border-radius: 4px;
-            box-sizing: border-box; /* Include padding in the element's total width and height */
+            box-sizing: border-box;
             transition: border-color 0.3s;
         }
 
@@ -232,16 +229,5 @@
             <button type="submit" class="submit-button"><i class="fas fa-check-circle"></i> Send Message</button>
         </form>
     </div>
-
-    @* <div class="container map-section">
-        <h2><i class="fas fa-map-marker-alt"></i> Our Location (Head Office)</h2>
-        <p>While we primarily offer online services, here is our head office address:</p>
-        <div class="address-box">
-            <p><strong>LinguaLink Inc.</strong></p>
-            <p>123 Tech Avenue, Software Park</p>
-            <p>Islamabad, Pakistan 44000</p>
-        </div>
-      
-    </div> *@
 
 </div>
