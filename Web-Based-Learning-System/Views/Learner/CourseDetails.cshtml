@@ -6,31 +6,40 @@
 }
 
 <style>
+    /* --- General Reset and Typography --- */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7f9; /* Light, calming background */
+        color: #334155;
+    }
+
     .course-detail-wrapper {
         max-width: 900px;
         margin: 40px auto;
         padding: 0 20px;
     }
 
+    /* --- Course Header Card --- */
     .course-header-card {
-        background-color: white;
-        padding: 30px;
+        background: #ffffff; /* White background */
+        padding: 30px; /* Increased padding */
         border-radius: 12px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        margin-bottom: 40px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Stronger, softer shadow */
+        border-left: 5px solid #1e3a8a; /* Accent color on the left */
     }
 
     h2 {
-        color: #1e3a8a;
-        font-size: 2.5rem;
+        color: #1e3a8a; /* Deep blue for main title */
+        font-size: 2.8rem; /* Slightly larger title */
         margin-top: 0;
         margin-bottom: 10px;
+        font-weight: 800;
     }
 
     .course-header-card p {
         color: #475569;
         font-size: 1.1rem;
-        line-height: 1.6;
+        line-height: 1.7;
         margin-bottom: 15px;
     }
 
@@ -38,45 +47,98 @@
         color: #1e293b;
     }
 
+    /* --- Level Badges --- */
     .level-badge {
         display: inline-block;
-        padding: 5px 15px;
+        padding: 6px 16px; /* Slightly more padding */
         border-radius: 20px;
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         margin-top: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .level-Beginner {
         background-color: #dcfce7; /* Light green */
         color: #15803d; /* Dark green */
+        border: 1px solid #bbf7d0;
     }
 
     .level-Intermediate {
         background-color: #fefce8; /* Light yellow */
         color: #b45309; /* Dark orange */
+        border: 1px solid #fde68a;
     }
 
     .level-Advanced {
-        background-color: #fee2e2;
-        color: #b91c1c;
+        background-color: #fee2e2; /* Light red */
+        color: #b91c1c; /* Dark red */
+        border: 1px solid #fecaca;
     }
 
+    /* --- Horizontal Rule and Section Headings --- */
     hr {
         border: 0;
         height: 1px;
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(100, 116, 139, 0.4), rgba(0, 0, 0, 0));
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(148, 163, 184, 0.6), rgba(0, 0, 0, 0)); /* Lighter gradient */
         margin: 40px 0;
     }
 
     h3 {
-        color: #1e293b;
-        font-size: 1.8rem;
+        color: #1e293b; /* Darker heading */
+        font-size: 2rem;
         margin-bottom: 25px;
+        font-weight: 700;
+        border-left: 4px solid #3b82f6; /* Accent line for H3 */
+        padding-left: 10px;
     }
 
+    /* --- Course Overview/Quiz Rules List & Sub-Headings (inside course-header-card) --- */
+    .course-header-card h4 {
+        color: #1e3a8a; /* Matching H2 color for sub-headings */
+        font-size: 1.5rem;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .course-header-card ul {
+        list-style: none; /* Remove default bullet */
+        padding-left: 0;
+    }
+
+        .course-header-card ul li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+            .course-header-card ul li::before {
+                content: '✓'; /* Custom checkmark bullet */
+                color: #22c55e; /* Success color */
+                font-weight: bold;
+                display: inline-block;
+                width: 1em;
+                margin-left: -1em;
+                position: absolute;
+            }
+
+    .course-header-card p:has(br) { /* Targets the Quiz Rules paragraph */
+        padding: 15px;
+        background-color: #fffbeb; /* Light warning/note color */
+        border-left: 4px solid #f59e0b;
+        border-radius: 4px;
+        white-space: pre-line; /* Maintains the <br /> line breaks */
+    }
+
+
+    /* --- Lesson/Quiz Cards --- */
     .lesson-card {
-        background-color: #f8fafc;
+        background-color: #ffffff; /* White card background */
         padding: 20px;
         margin-bottom: 15px;
         border-radius: 8px;
@@ -84,50 +146,84 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: background-color 0.2s;
+        transition: all 0.2s ease-in-out;
     }
 
         .lesson-card:hover {
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .lesson-card h4 {
             color: #334155;
-            font-size: 1.15rem;
+            font-size: 1.25rem; /* Slightly larger lesson title */
             margin: 0;
+            font-weight: 600;
         }
 
+        /* Style for commented-out Vocabulary cards */
+        .lesson-card.vocab-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 15px 20px;
+        }
+
+            .lesson-card.vocab-card p {
+                margin: 5px 0 0 0;
+                font-size: 0.95rem;
+            }
+
+            .lesson-card.vocab-card h4 {
+                margin-bottom: 10px;
+            }
+
+            .lesson-card.vocab-card strong {
+                font-weight: 700;
+                color: #1e3a8a;
+            }
+
+
+    /* --- Buttons --- */
     .btn {
-        padding: 8px 18px;
+        padding: 10px 22px; /* Increased padding */
         text-decoration: none;
         font-weight: 600;
-        border-radius: 6px;
+        border-radius: 8px; /* Slightly rounder corners */
         transition: all 0.2s;
         display: inline-block;
-        font-size: 0.95rem;
+        font-size: 1rem;
+        text-align: center;
+        min-width: 120px;
     }
 
     .btn-success {
-        background-color: #22c55e;
+        background-color: #10b981; /* Teal green, often used for 'Go/View' */
         color: white;
-        border: 1px solid #16a34a;
+        border: 1px solid #059669;
     }
 
         .btn-success:hover {
-            background-color: #16a34a;
-            box-shadow: 0 2px 5px rgba(34, 197, 94, 0.3);
+            background-color: #059669;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
         }
 
     .btn-primary {
-        background-color: #3b82f6;
+        background-color: #3b82f6; /* Standard blue for 'Attempt' */
         color: white;
         border: 1px solid #2563eb;
     }
 
         .btn-primary:hover {
             background-color: #2563eb;
-            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
         }
+
+    .text-secondary {
+        color: #64748b;
+        font-style: italic;
+        padding: 10px 0;
+    }
 
 </style>
 
@@ -142,13 +238,38 @@
                 @Model.Course.Level
             </span>
         </p>
+
+        <hr />
+
+        <h4>Course Overview:</h4>
+        <ul>
+            <li><strong>Total Lessons:</strong> @Model.Course.Lessons.Count</li>
+            <li>
+                <strong>Estimated Study Time:</strong>
+                @foreach (var lesson in Model.Course.Lessons)
+                {
+                    <span>Lesson @lesson.Id: ~1 hour; </span>
+                }
+            </li>
+            <li>
+                <strong>Assessments:</strong>
+                50% Quizzes, 50% Learning Examples / Assignments
+            </li>
+            <li><strong>Final Exam:</strong> 60% of total grade</li>
+        </ul>
+
+        <h4>Quiz Rules:</h4>
+        <p>
+            - Passing score: 5 or higher <br />
+            - Score below 5: you must redo the quiz
+        </p>
     </div>
 
-    <hr />
 
     <hr />
 
-    <h3>📚 Vocabulary</h3>
+@*     <h3>📚 Vocabulary</h3>
+
     @if (!Model.Vocabularies.Any())
     {
         <p class="text-secondary">No vocabulary added for this course.</p>
@@ -157,14 +278,29 @@
     {
         foreach (var vocab in Model.Vocabularies)
         {
-            <div class="lesson-card">
-                <h4>@vocab.Word</h4>
-                <p>@vocab.Meaning</p>
+            <div class="lesson-card" style="flex-direction: column; align-items: flex-start;">
+
+                <h4>
+                    <img src="~/images/vocab/@(string.IsNullOrEmpty(vocab.Emoji) ? "default.png" : vocab.Emoji)"
+                         alt="icon"
+                         width="26"
+                         height="26"
+                         style="vertical-align: middle; margin-right: 6px;" />
+
+                    @vocab.Word
+                </h4>
+
+                <p><strong>English Meaning:</strong> @vocab.EnglishMeaning</p>
+                <p><strong>Native Meaning:</strong> @vocab.NativeMeaning</p>
+
+                <p><strong>Example (English):</strong> @vocab.EnglishExample</p>
+                <p><strong>Example (Native):</strong> @vocab.NativeExample</p>
             </div>
         }
     }
 
     <hr />
+
 
     <h3>🔊 Pronunciation Guide</h3>
     @if (!Model.Pronunciations.Any())
@@ -191,7 +327,7 @@
             </div>
         }
     }
-<hr />
+<hr /> *@
 
     <h3>📘 Lessons</h3>
 

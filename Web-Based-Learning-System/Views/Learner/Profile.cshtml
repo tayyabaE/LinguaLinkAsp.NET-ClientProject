@@ -6,68 +6,145 @@
 }
 
 <style>
-    .profile-container {
-        max-width: 450px;
-        margin: 50px auto;
-        background: white;
-        padding: 35px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    /* --- Base Styling --- */
+    body {
+        background-color: #eef1f5;
+        font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    /* --- Main Card Container (Condensed) --- */
+    .profile-container {
+        max-width: 450px; /* Slightly narrower */
+        margin: 30px auto; /* Reduced top margin */
+        background: #ffffff;
+        padding: 30px; /* Reduced padding */
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(23, 45, 61, 0.08);
+        border-top: 4px solid #007bff;
+    }
+
+        /* --- Heading --- */
         .profile-container h2 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #1e3a8a;
+            margin-bottom: 25px; /* Reduced margin */
+            color: #1a202c;
+            font-size: 1.75rem; /* Slightly smaller title */
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
+    /* --- Form Groups (Condensed Spacing) --- */
     .form-group {
-        margin-bottom: 15px;
+        margin-bottom: 18px; /* Reduced space between fields */
     }
 
         .form-group label {
             display: block;
-            font-weight: 500;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin-bottom: 6px; /* Reduced margin */
+            color: #4a5568;
+            font-size: 0.9rem;
         }
 
-        .form-group input {
+        /* --- Input Fields --- */
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="file"] {
             width: 100%;
-            padding: 12px;
+            padding: 12px; /* Reduced vertical padding */
             border-radius: 8px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #e2e8f0;
+            background-color: #f7f9fb;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            color: #1a202c;
         }
 
-    button {
-        width: 100%;
-        padding: 14px;
-        background: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
+        .form-group input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            background-color: #f7f9fb;
+            cursor: pointer;
+            border-style: solid; /* Changed back to solid for cleaner look */
+        }
+
+    /* --- Profile Picture Section (Streamlined) --- */
+    .profile-pic-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
     }
 
-        button:hover {
-            background: #2563eb;
-        }
-
-    .success-message {
-        background: #dcfce7;
-        color: #166534;
-        padding: 12px;
-        border-radius: 8px;
+    .profile-pic-display {
         margin-bottom: 15px;
-        text-align: center;
-        font-weight: 500;
+        width: 100px; /* Reduced size */
+        height: 100px; /* Reduced size */
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #007bff; /* Reduced border thickness */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
     }
 
+    .profile-pic-placeholder {
+        background-color: #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #94a3b8;
+    }
+
+    /* --- Submit Button --- */
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px; /* Reduced padding */
+        background: #007bff;
+        color: white;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-top: 5px; /* Reduced margin */
+        transition: background 0.3s, box-shadow 0.3s;
+    }
+
+        button[type="submit"]:hover {
+            background: #0056b3;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+    /* --- Success Message --- */
+    .success-message {
+        background: #e6ffed;
+        color: #2f855a;
+        border: 1px solid #b7e3c9;
+        padding: 12px; /* Reduced padding */
+        border-radius: 8px;
+        margin-bottom: 20px; /* Reduced margin */
+        font-weight: 600;
+        font-size: 0.95rem;
+        animation: toast-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Email Read-only Note */
+    .read-only-note {
+        color: #a0aec0;
+        margin-top: 4px;
+        display: block;
+        font-size: 0.8rem; /* Smaller font for helper text */
+    }
 </style>
 
 <div class="profile-container">
-    <h2>Update Profile</h2>
+    <h2>My Profile Settings</h2>
 
     @if (TempData["Success"] != null)
     {
@@ -76,21 +153,45 @@
         </div>
     }
 
-    <form asp-action="Profile" method="post">
+    <form asp-action="Profile" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
+
+        <div class="form-group profile-pic-container">
+            @if (!string.IsNullOrEmpty(Model.ProfilePicturePath))
+            {
+                <img src="@Model.ProfilePicturePath"
+                     alt="Profile Picture"
+                     class="profile-pic-display" />
+            }
+            else
+            {
+                <div class="profile-pic-display profile-pic-placeholder">
+                    👤
+                </div>
+            }
+
+            <label style="margin-bottom: 10px;">Upload/Change Profile Photo</label>
+            <input asp-for="ProfilePicture" type="file" />
+        </div>
+
+        <hr style="border: 0; height: 1px; background-color: #edf2f7; margin: 15px 0;" />
 
         <div class="form-group">
             <label>Full Name</label>
-            <input asp-for="FullName" placeholder="Enter full name" />
+            <input asp-for="FullName" placeholder="Enter full name" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label>Nickname</label>
+            <input asp-for="Nickname" placeholder="Enter nickname (optional)" type="text" />
         </div>
 
         <div class="form-group">
             <label>Email</label>
-            <input asp-for="Email" placeholder="Enter email" />
+            <input asp-for="Email" placeholder="Enter email" type="email" readonly style="background-color: #f0f4f8; cursor: not-allowed;" />
+            <small class="read-only-note">Email address cannot be changed here.</small>
         </div>
 
-        <button type="submit">Update Profile</button>
+        <button type="submit">Save Changes</button>
     </form>
 </div>
-
-

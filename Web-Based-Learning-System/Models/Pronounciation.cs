@@ -7,9 +7,17 @@ public class Pronunciation
     [Key]
     public int Id { get; set; }
 
-    public int CourseId { get; set; }
-    [ForeignKey("CourseId")]
-    public Course Course { get; set; }
+    // Remove CourseId
+    // public int CourseId { get; set; }
+    // [ForeignKey("CourseId")]
+    // public Course Course { get; set; }
+
+    // Add LessonId
+    [Required]
+    public int LessonId { get; set; }
+
+    [ForeignKey("LessonId")]
+    public Lesson Lesson { get; set; }
 
     [Required]
     public string Word { get; set; }

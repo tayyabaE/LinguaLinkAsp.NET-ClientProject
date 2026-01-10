@@ -110,28 +110,42 @@
 
         @if (Model != null && Model.Any())
         {
-            foreach (var course in Model)
+            @foreach (var course in Model)
             {
+                bool isFreeCourse =
+                course.Name == "Spanish Basics" ||
+                course.Name == "French Intermediate";
+
                 <div class="course-card">
 
                     <span class="course-level
-                                @(course.Level == "Beginner" ? "level-beginner" :
-                                                                  course.Level == "Intermediate" ? "level-intermediate" :
-                                                                  "level-advanced")">
+                    @(course.Level == "Beginner" ? "level-beginner" :
+                                        course.Level == "Intermediate" ? "level-intermediate" :
+                                        "level-advanced")">
                 @course.Level
             </span>
 
                     <h3>@course.Name</h3>
                     <p>@course.Description</p>
 
-                    <a class="btn"
-                       href="@Url.Action("Login", "Account")">
-                        Login to Enroll
-                    </a>
+            @if (isFreeCourse)
+                    {
+                        <a class="btn"
+                           href="@Url.Action("Preview", "Home", new { id = course.Id })">
+                            View Course
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn"
+                           href="@Url.Action("Login", "Account")">
+                            Login to Enroll
+                        </a>
+                    }
 
                 </div>
+            }
 
-                }
 
         }
         else

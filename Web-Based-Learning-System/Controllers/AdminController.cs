@@ -29,11 +29,34 @@ namespace Web_Based_Learning_System.Controllers
             return View(model);
         }
 
-        public IActionResult ManageUsers()
+        public IActionResult ManageUsers(string status)
         {
-            var users = _context.Users.ToList();
-            return View(users);
+            var usersQuery = _context.Users.AsQueryable();
+            DateTime oneYearAgo = DateTime.Now.AddYears(-1);
+
+            if (status == "active")
+            {
+                usersQuery = usersQuery.Where(u =>
+                    u.LastLoginAt != null && u.LastLoginAt >= oneYearAgo);
+            }
+            else if (status == "inactive")
+            {
+                usersQuery = usersQuery.Where(u =>
+                    u.LastLoginAt == null || u.LastLoginAt < oneYearAgo);
+            }
+
+            ViewBag.ActiveCount = _context.Users.Count(u =>
+                u.LastLoginAt != null && u.LastLoginAt >= oneYearAgo);
+
+            ViewBag.InactiveCount = _context.Users.Count(u =>
+                u.LastLoginAt == null || u.LastLoginAt < oneYearAgo);
+
+            ViewBag.CurrentStatus = status; // ✅ IMPORTANT
+
+            return View(usersQuery.ToList());
         }
+
+
 
         public IActionResult ManageCourses()
         {

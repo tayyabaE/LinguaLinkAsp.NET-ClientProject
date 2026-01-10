@@ -1,0 +1,310 @@
+﻿@model CoursePreviewViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Course Preview";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7f9; /* Light, subtle background */
+    }
+
+    .preview-wrapper {
+        max-width: 1000px; 
+        margin: 60px auto; 
+        padding: 0 30px;
+    }
+
+    .preview-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 16px; 
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); /* Stronger but lighter shadow */
+        border: 1px solid #e0e0e0; /* Subtle border */
+    }
+
+    h2 {
+        font-size: 2.8rem; /* Larger course title */
+        color: #1e3a8a;
+        margin-bottom: 5px;
+        font-weight: 800;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+        color: #334155; /* Darker grey for section titles */
+        margin-top: 40px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e2e8f0; /* Separator for sections */
+        padding-bottom: 8px;
+    }
+
+    p {
+        color: #475569;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+
+    /* Course Details */
+    .level-badge {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        background-color: #dbeafe; /* Lighter blue */
+        color: #1d4ed8; /* Stronger primary blue */
+    }
+
+    .stats {
+        display: flex;
+        gap: 40px;
+        margin: 30px 0;
+        font-size: 1.05rem;
+        padding: 15px 0;
+        border-top: 1px solid #f0f4f8;
+        border-bottom: 1px solid #f0f4f8;
+    }
+
+        .stats strong {
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+    .info-box {
+        background-color: #f0f9ff; /* Very light blue */
+        border-left: 5px solid #0ea5e9; /* Teal/Sky Blue accent */
+        padding: 25px;
+        border-radius: 8px;
+        margin-top: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+        .info-box h4 {
+            color: #0ea5e9;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+
+        .info-box li {
+            padding: 5px 0;
+            color: #475569;
+        }
+
+    /* Section Items (Lessons, Vocab, Quizzes) */
+    .section-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid for smaller cards */
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .lesson-card {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        transition: 0.3s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+        .lesson-card:hover {
+            border-color: #93c5fd; /* Light blue on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .lesson-card h4 {
+            margin-top: 0;
+            color: #1e3a8a;
+            font-size: 1.4rem;
+        }
+
+        .lesson-card p {
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .lesson-card strong {
+            color: #334155;
+        }
+
+    audio {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Call to Action */
+    .cta-btn {
+        margin-top: 40px;
+        display: inline-block;
+        padding: 15px 35px; /* Bigger button */
+        background-color: #3b82f6;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        transition: 0.3s;
+        text-align: center;
+        width: 100%; /* Make it full width inside the card */
+        max-width: 400px; /* Limit max width */
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+        .cta-btn:hover {
+            background-color: #2563eb;
+            box-shadow: 0 10px 25px rgba(59,130,246,0.5);
+            transform: translateY(-3px);
+        }
+
+    .no-content {
+        padding: 15px;
+        background-color: #fffbeb;
+        border: 1px solid #fcd34d;
+        color: #92400e;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        margin: 40px 0;
+    }
+</style>
+
+<div class="preview-wrapper">
+    <div class="preview-card">
+
+        <h2>@Model.Course.Name</h2>
+        <p>@Model.Course.Description</p>
+        <span class="level-badge">@Model.Course.Level</span>
+
+        <div class="stats">
+            <p>📘 Lessons: <strong>@Model.Lessons.Count()</strong></p>
+            <p>📝 Quizzes: <strong>@Model.Quizzes.Count()</strong></p>
+        </div>
+
+        <div class="info-box">
+            <h4>📌 Course Structure Overview</h4>
+            <ul>
+                <li>50% Learning (Interactive Text/Media)</li>
+                <li>50% Quizzes (Knowledge Check & Retention)</li>
+            </ul>
+        </div>
+
+        <hr />
+
+        @* <h3>📚 Vocabulary Preview</h3>
+        <div class="section-content">
+            @if (!Model.Vocabularies.Any())
+            {
+                <p class="no-content">No vocabulary preview available.</p>
+            }
+            else
+            {
+                @foreach (var vocab in Model.Vocabularies.Take(3)) // Preview top 3
+                {
+                    <div class="lesson-card">
+                        <h4>🗣️ @vocab.Word</h4>
+                        <p><strong>Meaning:</strong> @vocab.EnglishMeaning</p>
+                        <p><strong>Example:</strong> "@vocab.EnglishExample"</p>
+                    </div>
+                }
+            }
+        </div> *@
+
+        <hr />
+
+        <h3>🔊 Pronunciation Guide Preview</h3>
+        <div class="section-content">
+            @if (!Model.Pronunciations.Any())
+            {
+                <p class="no-content">No pronunciation guide preview available.</p>
+            }
+            else
+            {
+                @foreach (var p in Model.Pronunciations.Take(2)) // Preview top 2
+                {
+                    <div class="lesson-card">
+                        <h4>@p.Word</h4>
+
+                        @if (!string.IsNullOrEmpty(p.Phonetic))
+                        {
+                            <p>Phonetic: <strong>@p.Phonetic</strong></p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(p.AudioPath))
+                        {
+                            <audio controls>
+                                <source src="@Url.Content(p.AudioPath)" type="audio/mpeg" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        }
+                    </div>
+                }
+            }
+        </div>
+
+        <hr />
+
+        <h3>📘 Course Outline (Lessons)</h3>
+        <div class="section-content">
+            @if (!Model.Lessons.Any())
+            {
+                <p class="no-content">No lessons have been structured yet.</p>
+            }
+            else
+            {
+                @foreach (var lesson in Model.Lessons)
+                {
+                    <div class="lesson-card">
+                        <p><strong>Lesson @lesson.OrderNo:</strong> @lesson.Title</p>
+                    </div>
+                }
+            }
+        </div>
+
+        <hr />
+
+        <h3>📝 Knowledge Check (Quizzes)</h3>
+        <div class="section-content">
+            @if (!Model.Quizzes.Any())
+            {
+                <p class="no-content">No quizzes have been created yet.</p>
+            }
+            else
+            {
+                @foreach (var quiz in Model.Quizzes.Take(3)) 
+                {
+                    <div class="lesson-card">
+                        <p><strong>Quiz Question Sneak Peek:</strong></p>
+                        <p>@quiz.Question</p>
+                    </div>
+                }
+            }
+        </div>
+
+        <a class="cta-btn"
+           href="@Url.Action("Register", "Account")">
+            Register to Access Full Course
+        </a>
+
+    </div>
+</div>

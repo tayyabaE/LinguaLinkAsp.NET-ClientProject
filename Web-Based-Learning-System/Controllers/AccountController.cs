@@ -24,20 +24,40 @@ namespace Web_Based_Learning_System.Controllers
             }
 
             [HttpPost]
-            public IActionResult Register(User user, string password)
+        [HttpPost]
+        public IActionResult Register(User user, string password, IFormFile ProfilePicture)
+        {
+            if (user == null || string.IsNullOrEmpty(password))
+                return View(user);
+
+            user.PasswordHash = HashPassword(password);
+
+            // Handle profile picture
+            if (ProfilePicture != null && ProfilePicture.Length > 0)
             {
-                user.PasswordHash = HashPassword(password);
-                _context.Users.Add(user);
-                _context.SaveChanges();
-                return RedirectToAction("Login");
+                var fileName = $"{Guid.NewGuid()}_{ProfilePicture.FileName}";
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    ProfilePicture.CopyTo(stream);
+                }
+
+                user.ProfilePicturePath = "/uploads/" + fileName;
             }
 
-            // LOGIN
-            public IActionResult Login()
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("Login");
+        }
+
+
+        // LOGIN
+        public IActionResult Login()
             {
                 return View();
             }
-
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
@@ -47,9 +67,20 @@ namespace Web_Based_Learning_System.Controllers
 
             if (user != null)
             {
-                HttpContext.Session.SetString("UserId", user.Id.ToString()); 
+                user.LastLoginAt = DateTime.Now;
+                _context.SaveChanges();
+
+                HttpContext.Session.SetString("UserId", user.Id.ToString());
                 HttpContext.Session.SetString("UserRole", user.Role);
                 HttpContext.Session.SetString("UserName", user.FullName);
+
+                HttpContext.Session.SetString("UserNickname",
+                    string.IsNullOrEmpty(user.Nickname) ? user.FullName : user.Nickname);
+
+                HttpContext.Session.SetString("UserProfilePicture",
+                    string.IsNullOrEmpty(user.ProfilePicturePath)
+                        ? "/images/default-avatar.png"
+                        : user.ProfilePicturePath);
 
                 if (user.Role == "Admin")
                     return RedirectToAction("Index", "Admin");
@@ -63,6 +94,7 @@ namespace Web_Based_Learning_System.Controllers
             ViewBag.Error = "Invalid login";
             return View();
         }
+
 
         public IActionResult Logout()
         {

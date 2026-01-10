@@ -18,5 +18,6 @@ namespace Web_Based_Learning_System.Models
         public string Level { get; set; } // e.g., Beginner, Intermediate, Advanced
 
         public ICollection<Lesson> Lessons { get; set; }
+        public ICollection<Quiz> Quizzes { get; set; }
     }
 }

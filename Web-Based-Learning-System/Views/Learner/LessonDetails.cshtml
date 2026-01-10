@@ -1,21 +1,20 @@
-﻿@model Lesson
+﻿@model LessonDetailsViewModel
+
 @{
     Layout = "~/Views/Shared/_LearnerLayout.cshtml";
     ViewData["Title"] = "Lesson Detail";
 }
 
 <style>
-    /* --- LESSON DETAILS PAGE STYLING (Learner View) --- */
     .lesson-content-wrapper {
-        max-width: 850px;
+        max-width: 900px;
         margin: 40px auto;
         padding: 0 20px;
     }
 
-    /* Main Lesson Card/Container */
     .lesson-content-card {
         background-color: white;
-        padding: 35px 45px; /* Generous padding for content */
+        padding: 35px 45px;
         border-radius: 12px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         border: 1px solid #e2e8f0;
@@ -23,75 +22,140 @@
     }
 
     h2 {
-        color: #1e3a8a; /* Deep blue title */
+        color: #1e3a8a;
         font-size: 2.2rem;
-        margin-top: 0;
         margin-bottom: 25px;
-        padding-bottom: 10px;
         border-bottom: 3px solid #f1f5f9;
-        font-weight: 700;
+        padding-bottom: 10px;
     }
 
-    /* Lesson Content Styling (for the <p>@Model.Content </p > ) */
-    .lesson-content {
+    h3 {
         color: #1e293b;
-        font-size: 1.1rem; /* Highly readable font size */
-        line-height: 1.8; /* Increased line height for better flow */
+        margin-bottom: 20px;
+    }
+
+    .lesson-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
         margin-bottom: 40px;
-        white-space: pre-wrap; /* Ensures content preserves formatting if any, otherwise standard flow */
     }
 
-    /* Styling for paragraphs within the content area */
-    .lesson-content p {
-        margin-bottom: 1.5em;
+    .lesson-card {
+        background-color: #f8fafc;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
     }
 
-    /* Completion Form and Button */
+        .lesson-card h4 {
+            margin-bottom: 10px;
+            color: #334155;
+        }
+
     .completion-form {
         text-align: right;
-        padding-top: 20px;
         border-top: 1px solid #e2e8f0;
+        padding-top: 20px;
     }
 
     .btn-success {
         padding: 12px 25px;
-        background: linear-gradient(135deg, #22c55e, #16a34a); /* Green gradient */
+        background: linear-gradient(135deg, #22c55e, #16a34a);
         color: white;
-        font-size: 1rem;
         font-weight: 700;
-        border: none;
         border-radius: 8px;
+        border: none;
         cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
-        text-decoration: none;
-        display: inline-block;
     }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #16a34a, #057833);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(34, 197, 94, 0.5);
-        }
 </style>
 
 <div class="lesson-content-wrapper">
-    <div class="lesson-content-card">
 
-        <h2>@Model.Title</h2>
+    <!-- 🔹 LESSON CONTENT -->
+    <div class="lesson-content-card">
+        <h2>@Model.Lesson.Title</h2>
 
         <div class="lesson-content">
-            @* We wrap the model content in a div to apply consistent styling to the text *@
-            @Html.Raw(Model.Content)
+            @Html.Raw(Model.Lesson.Content)
         </div>
+    </div>
 
+    <!-- 🔹 VOCABULARY -->
+    <div class="lesson-content-card">
+        <h3>📚 Vocabulary</h3>
+
+        @if (!Model.Vocabularies.Any())
+        {
+            <p class="text-secondary">No vocabulary for this lesson.</p>
+        }
+        else
+        {
+            foreach (var vocab in Model.Vocabularies)
+            {
+                <div class="lesson-card">
+                    <h4>
+                        <img src="~/images/vocab/@(string.IsNullOrEmpty(vocab.Emoji) ? "default.png" : vocab.Emoji)"
+                             width="24" height="24"
+                             style="vertical-align: middle; margin-right: 6px;" />
+
+                        @vocab.Word
+                    </h4>
+
+                    <p><strong>English Meaning:</strong> @vocab.EnglishMeaning</p>
+                    <p><strong>Native Meaning:</strong> @vocab.NativeMeaning</p>
+                    <p><strong>English Example:</strong> @vocab.EnglishExample</p>
+                    <p><strong>Native Example:</strong> @vocab.NativeExample</p>
+                </div>
+            }
+        }
+    </div>
+
+    <!-- 🔹 PRONUNCIATION -->
+    <div class="lesson-content-card">
+        <h3>🔊 Pronunciation Guide</h3>
+
+        @if (!Model.Pronunciations.Any())
+        {
+            <p class="text-secondary">No pronunciation guide for this lesson.</p>
+        }
+        else
+        {
+            foreach (var pron in Model.Pronunciations)
+            {
+                <div class="lesson-card">
+                    <h4>@pron.Word</h4>
+
+                    @if (!string.IsNullOrEmpty(pron.Phonetic))
+                    {
+                        <p><strong>Phonetic:</strong> @pron.Phonetic</p>
+                    }
+
+                    @if (!string.IsNullOrEmpty(pron.AudioPath))
+                    {
+                        <audio controls>
+                            <source src="@Url.Content(pron.AudioPath)" type="audio/mpeg" />
+                        </audio>
+                    }
+
+                    <p class="text-secondary">
+                        🎤 Listen and practice pronunciation
+                    </p>
+                </div>
+            }
+        }
+    </div>
+
+    <!-- 🔹 MARK COMPLETE -->
+    <div class="lesson-content-card">
         <form method="post" asp-action="CompleteLesson" class="completion-form">
             @Html.AntiForgeryToken()
-            <input type="hidden" name="lessonId" value="@Model.Id" />
+            <input type="hidden" name="lessonId" value="@Model.Lesson.Id" />
 
             <button type="submit" class="btn-success">
-                Mark as Completed ✔
+                Mark Lesson as Completed ✔
             </button>
         </form>
     </div>
+
 </div>

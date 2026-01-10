@@ -66,7 +66,6 @@ namespace Web_Based_Learning_System.Controllers
 
             int userId = int.Parse(userIdString);
 
-            // Check if already marked completed
             var alreadyCompleted = _context.UserProgress
                 .Any(p => p.UserId == userId && p.LessonId == lessonId);
 
@@ -128,7 +127,7 @@ public IActionResult Progress()
 
 
 
-    [HttpGet]
+        [HttpGet]
         public IActionResult Profile()
         {
             var userIdString = HttpContext.Session.GetString("UserId");
@@ -136,7 +135,6 @@ public IActionResult Progress()
                 return RedirectToAction("Login", "Account");
 
             int userId = int.Parse(userIdString);
-
             var user = _context.Users.Find(userId);
             if (user == null)
                 return RedirectToAction("Login", "Account");
@@ -144,7 +142,9 @@ public IActionResult Progress()
             var model = new ProfileViewModel
             {
                 FullName = user.FullName,
-                Email = user.Email
+                Nickname = user.Nickname,
+                Email = user.Email,
+                ProfilePicturePath = string.IsNullOrEmpty(user.ProfilePicturePath) ? "/uploads/profile.png" : user.ProfilePicturePath
             };
 
             return View(model);
@@ -162,21 +162,51 @@ public IActionResult Progress()
             int userId = int.Parse(userIdString);
 
             if (!ModelState.IsValid)
+            {
+                var userForPic = _context.Users.Find(userId);
+                model.ProfilePicturePath = userForPic?.ProfilePicturePath ?? "/uploads/profile.png";
                 return View(model);
+            }
 
             var user = _context.Users.Find(userId);
             if (user == null)
                 return RedirectToAction("Login", "Account");
 
             user.FullName = model.FullName;
+            user.Nickname = model.Nickname;
             user.Email = model.Email;
+
+            if (model.ProfilePicture != null && model.ProfilePicture.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var uniqueFileName = $"{Guid.NewGuid()}_{model.ProfilePicture.FileName}";
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProfilePicture.CopyTo(fileStream);
+                }
+
+                user.ProfilePicturePath = $"/uploads/{uniqueFileName}";
+            }
 
             _context.SaveChanges();
 
-            TempData["Success"] = "Profile updated successfully ✅";
+            HttpContext.Session.SetString("UserName", user.FullName);
+            HttpContext.Session.SetString("UserNickname", string.IsNullOrEmpty(user.Nickname) ? user.FullName : user.Nickname);
+            HttpContext.Session.SetString("UserProfilePicture", string.IsNullOrEmpty(user.ProfilePicturePath) ? "/uploads/profile.png" : user.ProfilePicturePath);
 
-            return RedirectToAction("Profile");
+            TempData["Success"] = "Profile updated successfully";
+
+            model.ProfilePicturePath = string.IsNullOrEmpty(user.ProfilePicturePath) ? "/uploads/profile.png" : user.ProfilePicturePath;
+
+            return View(model);
         }
+
+
 
         public IActionResult ExploreCourses()
         {
@@ -257,21 +287,12 @@ public IActionResult Progress()
                                   .Where(q => q.CourseId == courseId)
                                   .ToList();
 
-            var vocab = _context.Vocabularies
-                                .Where(v => v.CourseId == courseId)
-                                .ToList();
-
-            var pron = _context.Pronunciations
-                               .Where(p => p.CourseId == courseId)
-                               .ToList();
 
             var vm = new CourseDetailsViewModel
             {
                 Course = course,
                 Lessons = course.Lessons.OrderBy(l => l.OrderNo).ToList(),
-                Quizzes = quizzes,
-                Vocabularies = vocab,
-                Pronunciations = pron
+                Quizzes = quizzes
             };
 
             return View(vm);
@@ -280,11 +301,33 @@ public IActionResult Progress()
 
         public IActionResult LessonDetails(int lessonId)
         {
+            // Get the lesson
             var lesson = _context.Lessons.FirstOrDefault(l => l.Id == lessonId);
-            if (lesson == null) return NotFound();
+            if (lesson == null)
+                return NotFound();
 
-            return View(lesson);
+            // Get vocabularies for this lesson
+            var vocabularies = _context.Vocabularies
+                .Where(v => v.LessonId == lessonId)
+                .ToList();
+
+            // Get pronunciations for this lesson
+            var pronunciations = _context.Pronunciations
+                .Where(p => p.LessonId == lessonId)
+                .ToList();
+
+            // Build the view model
+            var vm = new LessonDetailsViewModel
+            {
+                Lesson = lesson,
+                Vocabularies = vocabularies,
+                Pronunciations = pronunciations
+            };
+
+            return View(vm);
         }
+
+
 
         public IActionResult AttemptQuiz(int quizId)
         {

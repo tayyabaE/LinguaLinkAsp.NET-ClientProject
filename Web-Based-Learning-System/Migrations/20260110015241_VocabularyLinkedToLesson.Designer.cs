@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web_Based_Learning_System.Data;
 
@@ -11,9 +12,11 @@ using Web_Based_Learning_System.Data;
 namespace Web_Based_Learning_System.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260110015241_VocabularyLinkedToLesson")]
+    partial class VocabularyLinkedToLesson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace Web_Based_Learning_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LessonId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Phonetic")
@@ -47,7 +50,7 @@ namespace Web_Based_Learning_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LessonId");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Pronunciations");
                 });
@@ -258,18 +261,7 @@ namespace Web_Based_Learning_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastLoginAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nickname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePicturePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -313,13 +305,13 @@ namespace Web_Based_Learning_System.Migrations
 
             modelBuilder.Entity("Pronunciation", b =>
                 {
-                    b.HasOne("Web_Based_Learning_System.Models.Lesson", "Lesson")
+                    b.HasOne("Web_Based_Learning_System.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("LessonId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Lesson");
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Web_Based_Learning_System.Controllers.Vocabulary", b =>
