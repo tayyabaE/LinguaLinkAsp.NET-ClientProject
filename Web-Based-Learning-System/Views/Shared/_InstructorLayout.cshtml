@@ -49,6 +49,14 @@
                     padding-left: 17px;
                 }
 
+        .badge {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
         .main-content {
             margin-left: 270px;
             padding: 30px;
@@ -78,6 +86,16 @@
         <a href="/Instructor/AddCourse" class="@GetActiveClass("/Instructor/AddCourse")">Add Course</a>
         <a href="/Instructor/AddLesson" class="@GetActiveClass("/Instructor/AddLesson")">Add Lesson</a>
         <a href="/Instructor/Profile" class="@GetActiveClass("/Instructor/Profile")">Profile</a>
+        <a href="/Instructor/Notifications"
+           class="@GetActiveClass("/Instructor/Notifications")">
+            Notifications
+            @if (ViewBag.PendingNotifications > 0)
+            {
+                <span class="badge">@ViewBag.PendingNotifications</span>
+            }
+        </a>
+
+
         <a href="/Account/Logout">Logout</a>
     </div>
 

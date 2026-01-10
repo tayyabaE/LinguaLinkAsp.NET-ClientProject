@@ -8,6 +8,7 @@
         public string SelectedAnswer { get; set; }
         public bool IsCorrect { get; set; }
         public DateTime AttemptDate { get; set; }
+        public bool IsReviewed { get; set; } = false;
     }
 
 }

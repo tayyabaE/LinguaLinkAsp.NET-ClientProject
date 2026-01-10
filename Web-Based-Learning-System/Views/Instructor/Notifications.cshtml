@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Web_Based_Learning_System.Models.QuizAttempt>
+@{
+    Layout = "~/Views/Shared/_InstructorLayout.cshtml";
+    ViewData["Title"] = "Edit Lesson";
+}
+
+@{
+    ViewData["Title"] = "Pending Quiz Submissions"; // Updated Title
+}
+
+<style>
+    /* --- General Layout and Typography --- */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px 0;
+    }
+
+    h2 {
+        color: #1e3a8a; /* Deep Blue */
+        margin-bottom: 25px;
+        font-weight: 700;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* --- Empty State Notification --- */
+    .empty-state {
+        background: #ecfdf5; /* Very Light Green */
+        border: 1px solid #a7f3d0; /* Light Green Border */
+        padding: 20px;
+        border-radius: 8px;
+        color: #065f46; /* Dark Green Text */
+        font-size: 1.1rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* --- Table Styling (Card Effect) --- */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+        table thead {
+            background: linear-gradient(90deg, #1e3a8a, #2563eb); /* Blue Gradient Header */
+            color: white;
+        }
+
+        table th {
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #f1f5f9;
+            transition: background-color 0.2s;
+        }
+
+            table tbody tr:hover {
+                background-color: #f7f9fc; /* Slight hover effect */
+            }
+
+        table td {
+            padding: 15px 20px;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        table tbody tr:last-child {
+            border-bottom: none; /* Remove border from the last row */
+        }
+
+    /* --- Action Button Styling --- */
+    .btn-review {
+        display: inline-block;
+        background: linear-gradient(135deg, #2563eb, #1e40af); /* Stronger Blue Gradient */
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    }
+
+        .btn-review:hover {
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+        }
+
+    /* Center the Action column content */
+    .action-cell {
+        text-align: center;
+    }
+
+</style>
+
+<div class="container">
+    <h2><i class="fas fa-bell"></i> Pending Quiz Submissions</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fas fa-check-circle" style="font-size:1.5rem;"></i>
+            🎉 **Great job!** No pending notifications. All quizzes are reviewed.
+        </div>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Quiz ID</th>
+                    <th>Submitted On</th>
+                    <th class="action-cell">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserId</td>
+                        <td>@item.QuizId</td>
+                        <td>
+                            @item.AttemptDate.ToString("dd MMM yyyy hh:mm tt")
+                        </td>
+                        <td class="action-cell">
+                            <a href="/Instructor/ReviewQuiz/@item.Id" class="btn-review">
+                                <i class="fas fa-marker"></i> Mark Reviewed
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

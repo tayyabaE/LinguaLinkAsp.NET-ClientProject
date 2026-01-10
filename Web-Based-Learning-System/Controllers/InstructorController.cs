@@ -17,9 +17,21 @@ namespace Web_Based_Learning_System.Controllers
         public IActionResult Index()
     {
         var courses = _context.Courses.Include(c => c.Lessons).ToList();
-        return View(courses);
+            LoadPendingNotifications();
+            return View(courses);
     }
 
+        public IActionResult Dashboard()
+        {
+            int pendingCount = _context.QuizAttempts
+                .Where(q => q.IsReviewed == false)
+                .Count();
+
+            ViewBag.PendingNotifications = pendingCount;
+            LoadPendingNotifications();
+
+            return View();
+        }
 
         public IActionResult AddCourse()
         {
@@ -45,6 +57,7 @@ namespace Web_Based_Learning_System.Controllers
         public IActionResult AddLesson()
         {
             ViewBag.Courses = _context.Courses.ToList();
+            LoadPendingNotifications();
             return View("AddLesson");
         }
 
@@ -72,7 +85,8 @@ namespace Web_Based_Learning_System.Controllers
             Lesson = lesson,
             Courses = _context.Courses.ToList()
         };
-        return View(vm);
+            LoadPendingNotifications();
+            return View(vm);
     }
 
         [HttpPost]
@@ -137,9 +151,41 @@ namespace Web_Based_Learning_System.Controllers
                 FullName = instructor.FullName,
                 Email = instructor.Email
             };
-
+            LoadPendingNotifications();
             return View(model);
         }
+        private void LoadPendingNotifications()
+        {
+            ViewBag.PendingNotifications = _context.QuizAttempts
+                .Where(q => q.IsReviewed == false)
+                .Count();
+        }
+        public IActionResult Notifications()
+        {
+            LoadPendingNotifications();
+
+            var pending = _context.QuizAttempts
+                .Where(q => !q.IsReviewed)
+                .OrderByDescending(q => q.AttemptDate)
+                .ToList();
+
+            return View(pending);
+        }
+
+        public IActionResult ReviewQuiz(int id)
+        {
+            var quiz = _context.QuizAttempts.Find(id);
+
+            if (quiz != null)
+            {
+                quiz.IsReviewed = true;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Notifications");
+        }
+
+
 
         // POST: Update Instructor Profile
         [HttpPost]
