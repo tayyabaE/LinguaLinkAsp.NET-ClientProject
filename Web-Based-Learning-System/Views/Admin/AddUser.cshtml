@@ -1,141 +1,194 @@
 ﻿@using Web_Based_Learning_System.ViewModels
 @model UserViewModel
+
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "Add User";
 }
 
 <style>
+
     .add-user-container {
-        max-width: 500px;
-        margin: 50px auto;
-        background: white;
-        padding: 35px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        font-family: 'Segoe UI', Tahoma, sans-serif;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft Shadow */
     }
 
-        .add-user-container h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #1e3a8a;
-        }
+    h2 {
+        color: #1e3a8a; 
+        margin-bottom: 30px;
+        font-weight: 700;
+        font-size: 2rem;
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
+    /* --- Form Groups and Elements --- */
     .form-group {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
         .form-group label {
             display: block;
-            font-weight: 500;
-            margin-bottom: 5px;
-            color: #1e293b;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151; /* Dark Gray Text */
             font-size: 0.95rem;
-            color: #1e293b;
-            transition: border 0.2s, box-shadow 0.2s;
         }
 
-            .form-group input:focus,
-            .form-group select:focus {
-                outline: none;
-                border-color: #3b82f6;
-                box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
-            }
-
-    button.action-btn {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
         width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 1rem;
+        color: #4b5563;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+        input:focus,
+        select:focus {
+            border-color: #3b82f6; /* Focus Blue */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            outline: none;
+        }
+
+    /* --- Validation Feedback --- */
+    .text-danger {
+        color: #ef4444; /* Red for errors */
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: block;
+    }
+
+    /* --- Success Message (Badge/Alert) --- */
+    .success-message {
+        background: #ecfdf5; /* Light Green */
+        border: 1px solid #a7f3d0;
+        color: #065f46; /* Dark Green Text */
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 1; /* Initial opacity for fade out */
+        transition: opacity 0.5s ease-out;
+    }
+
+    /* --- Action Button (Submit) - Green Accent --- */
+    .action-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(135deg, #10b981, #059669); /* Green Gradient */
         color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
+        border-radius: 6px;
+        text-decoration: none;
         font-weight: 600;
+        font-size: 1rem;
+        border: none;
         cursor: pointer;
         transition: all 0.2s ease;
-        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
     }
 
-        button.action-btn:hover {
-            background: linear-gradient(135deg, #2563eb, #1e40af);
+        .action-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
             transform: translateY(-1px);
-            box-shadow: 0 5px 12px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
         }
-
-    .success-message {
-        background: #dcfce7;
-        color: #166534;
-        padding: 12px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        text-align: center;
-        font-weight: 500;
-        animation: fadeOut 5s forwards;
-    }
-
-  
 </style>
 
 <div class="add-user-container">
-    <h2>Add New User</h2>
+    <h2><i class="fas fa-user-plus"></i> Add New User</h2>
 
     @if (TempData["Success"] != null)
     {
         <div class="success-message" id="successMsg">
+            <i class="fas fa-check-circle"></i>
             @TempData["Success"]
         </div>
     }
 
-<form asp-action="AddUser" method="post">
-    @Html.AntiForgeryToken()
+    <form asp-controller="Admin"
+          asp-action="AddUser"
+          method="post"
+          enctype="multipart/form-data">
 
-    <div class="form-group">
-        <label>Full Name</label>
-        <input asp-for="FullName" placeholder="Enter full name" />
-        <span asp-validation-for="FullName" class="text-danger"></span>
-    </div>
+        @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        <label>Email</label>
-        <input asp-for="Email" placeholder="Enter email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="FullName">Full Name</label>
+            <input asp-for="FullName" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Password</label>
-        <input asp-for="Password" type="password" placeholder="Enter password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Nickname">Nickname</label>
+            <input asp-for="Nickname" placeholder="Optional display name" />
+            <span asp-validation-for="Nickname" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Role</label>
-        <select asp-for="Role">
-            <option value="">-- Select Role --</option>
-            <option value="Admin">Admin</option>
-            <option value="Instructor">Instructor</option>
-            <option value="Learner">Learner</option>
-        </select>
-        <span asp-validation-for="Role" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
 
-    <br />
-    <button type="submit" class="action-btn">Add User</button>
-</form>
+        <div class="form-group">
+            <label asp-for="Password">Password</label>
+            <input asp-for="Password" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Role">Role</label>
+            <select asp-for="Role">
+                <option value="">-- Select Role --</option>
+                <option value="Admin">Admin</option>
+                <option value="Instructor">Instructor</option>
+                <option value="Learner">Learner</option>
+            </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProfilePicture">Profile Picture</label>
+            <input asp-for="ProfilePicture" type="file" accept="image/*" />
+        </div>
+
+        <button type="submit" class="action-btn">
+            <i class="fas fa-plus-circle"></i> Create User
+        </button>
+    </form>
 
 </div>
 
-<script>
-    setTimeout(() => {
-        const msg = document.getElementById('successMsg');
-        if (msg) msg.style.display = 'none';
-    }, 5000);
-</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Script to hide the success message after 5 seconds with a fade-out effect
+        setTimeout(() => {
+            const msg = document.getElementById('successMsg');
+            if (msg) msg.style.opacity = '0'; // Start fade out
+        }, 4500);
+
+        setTimeout(() => {
+            const msg = document.getElementById('successMsg');
+            if (msg) msg.style.display = 'none'; // Fully remove after fade
+        }, 5000);
+    </script>
+}

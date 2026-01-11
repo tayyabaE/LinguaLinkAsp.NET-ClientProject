@@ -4,11 +4,21 @@ namespace Web_Based_Learning_System.ViewModels
 {
     public class UserViewModel
     {
-        public int Id { get; set; }
-        public string FullName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        
-        public string Role { get; set; } // e.g., Admin, Instructor, Learner
-        public string Password { get; set; } = string.Empty; 
+        [Required]
+        public string FullName { get; set; }
+
+        [Required, EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }
+
+        [Required]
+        public string Role { get; set; }
+
+        public string Nickname { get; set; }
+
+        public IFormFile ProfilePicture { get; set; }
     }
 }

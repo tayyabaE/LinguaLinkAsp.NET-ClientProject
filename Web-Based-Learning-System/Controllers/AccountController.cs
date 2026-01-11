@@ -23,7 +23,7 @@ namespace Web_Based_Learning_System.Controllers
                 return View();
             }
 
-            [HttpPost]
+           
         [HttpPost]
         public IActionResult Register(User user, string password, IFormFile ProfilePicture)
         {

@@ -51,7 +51,7 @@ namespace Web_Based_Learning_System.Controllers
             ViewBag.InactiveCount = _context.Users.Count(u =>
                 u.LastLoginAt == null || u.LastLoginAt < oneYearAgo);
 
-            ViewBag.CurrentStatus = status; // ✅ IMPORTANT
+            ViewBag.CurrentStatus = status; 
 
             return View(usersQuery.ToList());
         }
@@ -63,73 +63,75 @@ namespace Web_Based_Learning_System.Controllers
             var courses = _context.Courses.Include(c => c.Lessons).ToList();
             return View(courses);
         }
-        // Add User - GET
-        public IActionResult AddUser()
-        {
-            var model = new UserViewModel();
-            return View(model);
-        }
+        
+       
 
-        // Add User - POST
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public IActionResult AddUser(UserViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
+            if (_context.Users.Any(u => u.Email == model.Email))
+            {
+                ModelState.AddModelError("Email", "Email is already registered.");
+                return View(model);
+            }
+
+            string profilePath = "/images/default-avatar.png";
+
+            // Handle profile picture upload
+            if (model.ProfilePicture != null && model.ProfilePicture.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                Directory.CreateDirectory(uploadsFolder);
+
+                string fileName = Guid.NewGuid() + Path.GetExtension(model.ProfilePicture.FileName);
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProfilePicture.CopyTo(stream);
+                }
+
+                profilePath = "/uploads/" + fileName;
+            }
+
             var user = new User
             {
                 FullName = model.FullName,
+                Nickname = model.Nickname,
                 Email = model.Email,
                 Role = model.Role,
-                PasswordHash = model.Password // or hash it properly
+                PasswordHash = HashPassword(model.Password),
+                ProfilePicturePath = profilePath,
+                LastLoginAt = null
             };
 
             _context.Users.Add(user);
             _context.SaveChanges();
 
             TempData["Success"] = "User added successfully!";
-            return RedirectToAction("ManageUsers");
+            return RedirectToAction("AddUser");
         }
 
-
-        public IActionResult EditUser(int id)
+        public IActionResult AddUser()
         {
-            var user = _context.Users.Find(id);
-            if (user == null) return NotFound();
-
-            var model = new UserViewModel
-            {
-                Id = user.Id,
-                FullName = user.FullName,
-                Email = user.Email,
-                Role = user.Role
-            };
-
-            return View(model);
+            var model = new UserViewModel();
+            return View(model); 
         }
 
-        // Edit User - POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditUser(UserViewModel model)
+
+        private string HashPassword(string password)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var user = _context.Users.Find(model.Id);
-            if (user == null) return NotFound();
-
-            user.FullName = model.FullName;
-            user.Email = model.Email;
-            user.Role = model.Role;
-
-            _context.SaveChanges();
-
-            TempData["Success"] = "User updated successfully!";
-            return RedirectToAction("ManageUsers");
+            using var sha = System.Security.Cryptography.SHA256.Create();
+            var bytes = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(bytes);
         }
+
+      
 
         // Delete User
         public IActionResult DeleteUser(int id)
